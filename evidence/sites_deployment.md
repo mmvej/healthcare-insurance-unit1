@@ -47,3 +47,7 @@ Moved the full-sample findings section after all five visualisations and the reg
 ## Visual-first revision
 
 Replaced the extended relationship narrative with three additional filter-aware comparison charts: smoking-group mean/median, sex-group means within smoking categories, and dependant-count mean/median. All include direct numeric labels and counts. The original five charts remain, giving eight visualisations. The selected-group paragraph is reduced to a brief scope/causality note. Definitions and supporting limitations remain below the visualisations. Browser review confirmed the smoking chart's readability and checked the rendered numeric labels against the Python summaries. A smoking=yes-only selection showed 274 records and updated all eight charts. JavaScript syntax check passed.
+
+## Opening definitions guide
+
+Added a compact guide immediately below the page title and before filters/charts. It defines charges first, distinguishing recorded costs from premiums, then defines age/age bands, BMI, smoking status, covered dependants, region and sex. Mean and median receive short explanations and the full dictionary remains linked below. Checked document ordering: opening guide, filters, then visual comparisons. No data or chart changes.

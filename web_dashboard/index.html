@@ -5,8 +5,22 @@
 :root{color-scheme:dark;--page:#101821;--surface:#18232f;--text:#e8eef3;--muted:#b0c0cd;--border:#354657;--badge:#253749;--hover:#293e51;--blue:#8bbfe8;--orange:#efb86f;--focus:#f5cc8f;--axis:#8297a9;--grid:#304354;--error:#ffaea5}
 :root[data-theme="light"]{color-scheme:light;--page:#f6f7f8;--surface:#ffffff;--text:#20313e;--muted:#526773;--border:#d5dfe5;--badge:#e7edf1;--hover:#eef4f7;--blue:#245c88;--orange:#a95b12;--focus:#9a641f;--axis:#879aa6;--grid:#e7ecef;--error:#8b251b}
 .header-actions{display:flex;flex-direction:column;align-items:flex-end;gap:12px}.theme-switch{display:flex;align-items:center;gap:10px;font:inherit;font-size:13px}.switch-track{width:34px;height:20px;border-radius:12px;background:var(--axis);padding:3px;display:inline-flex}.switch-knob{height:14px;width:14px;border-radius:50%;background:var(--surface);transition:transform .15s}.theme-switch[aria-checked="true"] .switch-track{background:var(--blue)}.theme-switch[aria-checked="true"] .switch-knob{transform:translateX(14px)}@media(max-width:760px){.header-actions{align-items:flex-start;margin-top:12px}}@media(prefers-reduced-motion:reduce){.switch-knob{transition:none}}
-</style></head><body><main>
+.intro{margin:0 0 20px}.intro p{margin:0 0 14px}.quick-definitions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 24px;margin:0}.quick-definitions div{min-width:0}.quick-definitions dt{font-weight:600;font-size:13px}.quick-definitions dd{margin:4px 0 0;font-size:13px;line-height:1.6;color:var(--muted)}@media(max-width:760px){.quick-definitions{grid-template-columns:1fr 1fr}}@media(max-width:420px){.quick-definitions{grid-template-columns:1fr}}</style></head><body><main>
 <header><div><div class="eyebrow">Unit 1 · Healthcare insurance analysis</div><h1>Understanding recorded charges</h1><div class="muted">Explore differences by smoking status, age, BMI and region.</div></div><div class="header-actions"><button type="button" id="theme-toggle" class="theme-switch" role="switch" aria-checked="true" aria-label="Dark mode"><span class="switch-track" aria-hidden="true"><span class="switch-knob"></span></span><span>Dark mode</span></button><span class="tag">1,338 source records · Web edition</span></div></header>
+<section class="panel intro" aria-labelledby="intro-title">
+<h2 id="intro-title">What you’re looking at</h2>
+<p><strong>Charges means the medical insurance cost amount recorded for each insured-person record.</strong> The charts display these amounts in US dollars (USD). They are not the regular insurance premiums paid to keep cover. Higher charges mean a larger recorded cost, not necessarily more treatment or poorer health.</p>
+<dl class="quick-definitions">
+<div><dt>Age</dt><dd>The insured person's age in years. Age bands group those ages for filtering.</dd></div>
+<div><dt>BMI</dt><dd>Body mass index: weight relative to height, expressed in kg/m².</dd></div>
+<div><dt>Smoking status</dt><dd>The source's yes/no label for whether the person is a smoker.</dd></div>
+<div><dt>Covered dependants</dt><dd>The number of dependants covered, stored in the column named children.</dd></div>
+<div><dt>Region</dt><dd>The source's northeast, northwest, southeast or southwest coverage category.</dd></div>
+<div><dt>Sex</dt><dd>The female/male label recorded in the source dataset.</dd></div>
+</dl>
+<p class="muted" style="margin:14px 0 0">Each row is a source record. Mean means average; median means the middle value. <a href="#variables-title">Full definitions and measurement details</a></p>
+</section>
+
 <p class="muted">Units used: charges in US dollars (USD), BMI in kg/m² and age in years. USD and kg/m² are working assumptions for this dashboard.</p>
 
 <section class="filters" aria-label="Filter records"><fieldset><legend>Region</legend><div id="regions" class="choices"></div></fieldset><fieldset><legend>Smoking status</legend><div id="smokers" class="choices"></div></fieldset><fieldset><legend>Age band</legend><div id="bands" class="choices"></div></fieldset><div><button id="reset">Reset filters</button></div></section>
