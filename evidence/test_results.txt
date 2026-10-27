@@ -1,0 +1,11 @@
+............                                                             [100%]
+=============================== warnings summary ===============================
+tests/test_analysis.py::test_dashboard_default_and_filtered
+tests/test_analysis.py::test_dashboard_default_and_filtered
+tests/test_analysis.py::test_dashboard_default_and_filtered
+tests/test_analysis.py::test_dashboard_default_and_filtered
+  /Users/mmv/Documents/ChatGPT/DA Unit 1/.venv/lib/python3.14/site-packages/seaborn/categorical.py:700: MatplotlibDeprecationWarning: vert: bool was deprecated in Matplotlib 3.11 and will be removed in 3.13. Use orientation: {'vertical', 'horizontal'} instead.
+    artists = ax.bxp(**boxplot_kws)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+12 passed, 4 warnings in 2.51s
