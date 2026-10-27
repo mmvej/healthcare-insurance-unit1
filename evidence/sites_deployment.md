@@ -51,3 +51,7 @@ Replaced the extended relationship narrative with three additional filter-aware 
 ## Opening definitions guide
 
 Added a compact guide immediately below the page title and before filters/charts. It defines charges first, distinguishing recorded costs from premiums, then defines age/age bands, BMI, smoking status, covered dependants, region and sex. Mean and median receive short explanations and the full dictionary remains linked below. Checked document ordering: opening guide, filters, then visual comparisons. No data or chart changes.
+
+## Remove scattered small print
+
+Removed the subtitle, unit-assumption line, header badges, filter hint, general chart commentary, chart captions, table captions and standalone acknowledgement footer from the main dashboard. Essential source/unit assumptions, chart-reading details and AI attribution are consolidated inside the existing expandable source section. Definitions remain, with larger type. Removed the corresponding unused story DOM update so filters continue to render without a missing-element error. JavaScript syntax and structural checks passed; chart containers and controls are preserved.
