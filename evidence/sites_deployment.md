@@ -24,3 +24,10 @@ The notebook and its download are linked from the source-details section. Native
 Published successfully from Sites source commit f66154b8599e68be57c8659d22bd9fa32e988b47.
 Saved version: appgprj_6ae1003609c48191bab3e4a6126124d3~appgver_35ad525098888191bfd5a9eb26a7a08e
 Deployment: appgdep_6ae101ee05388191958b99746565bda3
+
+## Display units update
+
+27 October 2026: at the user's request, the main dashboard now uses USD for charges and kg/m² for BMI. Repeated uncertainty phrases were replaced with consistent unit labels and one visible working-assumption note. No conversion, annualisation or change to underlying values was applied. The original notebook and source record retain their acquisition-time provenance assessment. JavaScript syntax and unit-wording checks passed.
+
+Sites source commit: 6b019687c1be278deeaf3c3882a13e2d6ddeef14
+Deployment succeeded: appgdep_6ae10253c5a881918a78567f99db4078
