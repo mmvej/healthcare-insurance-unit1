@@ -63,3 +63,11 @@ Added normal-sized interpretation directly below each of the eight charts and th
 ## Closing conclusion
 
 Added a final Conclusion section summarising the full 1,338-record findings, the need to compare distributions and group sizes, and the limits on forecasting or individual pricing. Its full-dataset scope is explicit so it is not confused with the filter-aware chart explanations. Verified it is the final content section. No calculations or chart changes.
+
+## Deduplicate labels and naturalise smoking categories
+
+Audited the unfiltered page before editing. There were 20 visible n= labels across chart marks/axes, seven more in chart explanations, and 20 additional n= occurrences in hover titles. The sex chart had six visible counts (four subgroups plus two sex totals) and repeated the four subgroup counts in its paragraph.
+
+Retained each required comparison denominator once: 16 plain-language 'records' labels across the charts, with four subgroup labels in the sex chart and no redundant sex totals. Removed duplicated box-plot counts, prose counts and comparison-tooltip counts. Explanations now interpret patterns instead of restating bar labels, medians and KPI amounts. Replaced technical smoking=yes/no phrasing with smokers/non-smokers in filters, chart categories, legends, hover text, table entries, explanations and conclusion; raw field values and filtering remain unchanged. Kept chart accessibility descriptions, shortened the generic comparison descriptions, and preserved all eight chart components.
+
+Browser checks found zero visible n= occurrences and zero smoking=yes/no phrases after editing. A smokers-only selection showed 274 records and natural fallback wording. Chart means and medians remain unchanged. The sex chart was visually reviewed with four non-overlapping subgroup labels and its explanatory paragraph. Added a content-version suffix to the script URL after observing cached old JavaScript in preview, then verified the updated render. JavaScript syntax validation passed.
