@@ -43,3 +43,7 @@ Added a keyboard-accessible Dark mode switch, defaulting to dark for new visitor
 ## Findings placement
 
 Moved the full-sample findings section after all five visualisations and the regional group table, before variable definitions, at the user's request. Updated the filter reference from 'below' to 'above'. Confirmed the HTML order and preserved all charts, data, calculations and theme controls.
+
+## Visual-first revision
+
+Replaced the extended relationship narrative with three additional filter-aware comparison charts: smoking-group mean/median, sex-group means within smoking categories, and dependant-count mean/median. All include direct numeric labels and counts. The original five charts remain, giving eight visualisations. The selected-group paragraph is reduced to a brief scope/causality note. Definitions and supporting limitations remain below the visualisations. Browser review confirmed the smoking chart's readability and checked the rendered numeric labels against the Python summaries. A smoking=yes-only selection showed 274 records and updated all eight charts. JavaScript syntax check passed.
