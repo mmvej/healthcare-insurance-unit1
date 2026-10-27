@@ -1,0 +1,6 @@
+/Users/mmv/Documents/ChatGPT/DA Unit 1/.venv/lib/python3.14/site-packages/IPython/paths.py:60: UserWarning: IPython dir '/Users/mmv/.ipython' is not a writable location, using a temp directory.
+  warn("IPython dir '{}' is not a writable location,"
+/Users/mmv/Documents/ChatGPT/DA Unit 1/.venv/lib/python3.14/site-packages/IPython/paths.py:60: UserWarning: IPython dir '/Users/mmv/.ipython' is not a writable location, using a temp directory.
+  warn("IPython dir '{}' is not a writable location,"
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+Fresh-kernel execution passed; notebook and HTML saved.
