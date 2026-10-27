@@ -16,3 +16,11 @@ The Sites source helper pushed the source and packaged the static deployment arc
 Local checks: JavaScript syntax validation passed. The preview loaded all 1,338 records, showing mean 13,270.42, median 9,382.03 and smoking-group means 32,050.23 and 8,434.27, matching the executed Python notebook. Selecting southeast and smoking=yes showed 91 records, mean 34,845.00, median 37,484.45 and SD 11,324.77. Clearing every region hid results and displayed the empty-selection message. Five chart containers rendered with actual data. A browser screenshot review identified implicit SVG path fill on axes; a scoped CSS fix removed that fill, and a second visual review confirmed the histogram, box plot and regional bars displayed correctly. Source data, filter logic and chart encodings were preserved.
 
 The notebook and its download are linked from the source-details section. Native Sites publication success confirms deployment; an unauthenticated assessor-access test is not claimed for this private site. Mobile browser QA was not performed.
+
+## Variable definitions update
+
+27 October 2026: added a visible 'What each variable means' section defining age, sex, BMI, covered dependants (children), smoking status, region, charges and the derived age_band. Each definition includes type/values and relevant source limitations. Added explanations of record count, mean, median, sample SD, quartiles/IQR and association. Full-file ranges are explicitly distinguished from filtered selections. All eight field names were checked against the source schema and derived field. The rendered table was checked in the browser for readable wrapping. Existing chart and filter code was unchanged.
+
+Published successfully from Sites source commit f66154b8599e68be57c8659d22bd9fa32e988b47.
+Saved version: appgprj_6ae1003609c48191bab3e4a6126124d3~appgver_35ad525098888191bfd5a9eb26a7a08e
+Deployment: appgdep_6ae101ee05388191958b99746565bda3
