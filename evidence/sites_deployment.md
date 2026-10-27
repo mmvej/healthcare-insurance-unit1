@@ -39,3 +39,7 @@ Deployment succeeded: appgdep_6ae10253c5a881918a78567f99db4078
 ## Default dark mode
 
 Added a keyboard-accessible Dark mode switch, defaulting to dark for new visitors. Valid light/dark preferences are remembered in localStorage; storage failure falls back safely to dark. Theme is restored before first paint. Page, controls, table text, chart axes and chart series use corresponding theme colours. Browser checks confirmed default dark, switching to light, persistence after reload and switching back. Explicit chart palette values avoid a browser colour-transformation issue seen with CSS-variable SVG fills; computed blue/orange series colours were rechecked. JavaScript syntax validation passed. Data calculations were unchanged.
+
+## Findings placement
+
+Moved the full-sample findings section after all five visualisations and the regional group table, before variable definitions, at the user's request. Updated the filter reference from 'below' to 'above'. Confirmed the HTML order and preserved all charts, data, calculations and theme controls.
