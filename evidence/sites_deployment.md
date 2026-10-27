@@ -59,3 +59,7 @@ Removed the subtitle, unit-assumption line, header badges, filter hint, general 
 ## Explanations attached to visuals
 
 Added normal-sized interpretation directly below each of the eight charts and the regional table. Explanations are calculated from the current selection, including means, medians, differences/ratios, within-smoking Pearson correlations, regional rankings, within-smoking sex comparisons and dependant-group sizes. They explain implications and relevant limits rather than repeating generic captions. One-group and insufficient-variation cases have specific fallback wording. Browser review confirmed readable placement; a smoking=yes filter changed the record count to 274, removed the two-group comparison, and updated BMI correlation to 0.81. Full-sample figures agree with the earlier executed Python summaries. JavaScript syntax check passed.
+
+## Closing conclusion
+
+Added a final Conclusion section summarising the full 1,338-record findings, the need to compare distributions and group sizes, and the limits on forecasting or individual pricing. Its full-dataset scope is explicit so it is not confused with the filter-aware chart explanations. Verified it is the final content section. No calculations or chart changes.
