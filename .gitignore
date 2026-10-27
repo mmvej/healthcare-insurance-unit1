@@ -6,3 +6,6 @@ __pycache__/
 .DS_Store
 .streamlit/secrets.toml
 .env
+
+sites/
+Healthcare_Insurance_Assignment.zip

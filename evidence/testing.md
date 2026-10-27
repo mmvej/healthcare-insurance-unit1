@@ -39,3 +39,7 @@ GitHub repository: https://github.com/mmvej/healthcare-insurance-unit1
 Remote Streamlit deployment: pending. Streamlit Community Cloud opened at https://share.streamlit.io and showed an unauthenticated sign-in page stating that signing in agrees to its Terms of Service. The assistant did not accept terms on the user's behalf. The project can be deployed after the user signs in and accepts any required terms. No remote dashboard URL or remote assessor-access test is claimed. The README includes the remaining deployment steps.
 
 The assignment's required remote dashboard deliverable is therefore outstanding. Local execution, source availability and automated tests do not establish that a remote assessor can access the app. Final submission through the college channel also remains the student's responsibility.
+
+## Sites follow-up
+
+The user subsequently requested Sites deployment. A browser-based equivalent was published successfully at https://healthcare-insurance-unit1-mmvej.moseth.chatgpt.site with default private access. See sites_deployment.md for the exact saved version, deployment ID and browser checks. This updates the availability of a hosted web edition; the Python Streamlit deployment and assessor-access requirements above remain unresolved.

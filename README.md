@@ -6,7 +6,9 @@ This project explores recorded medical insurance charges in the Healthcare Insur
 
 Repository URL: https://github.com/mmvej/healthcare-insurance-unit1
 
-Deployed Streamlit URL: deployment pending; a Streamlit Cloud sign-in and acceptance of its terms are required. A local dashboard is not a substitute for the required assessor-accessible link.
+Sites web dashboard: https://healthcare-insurance-unit1-mmvej.moseth.chatgpt.site (private to the owner by default). This browser-based edition uses the same cleaned records and descriptive calculations. Its source is in web_dashboard/.
+
+Deployed Streamlit URL: still pending. Sites does not host the Python Streamlit server. The brief specifically requires deployed Streamlit and an assessor-accessible URL; the Sites alternative needs assessor agreement, and private access does not establish assessor access.
 
 ## Questions and findings
 
@@ -75,6 +77,10 @@ CSV is sufficient for this static sample; a controlled database would be prefera
 | 4.2 | Handling justifications, permissions, privacy, security, ethics and standards |
 
 Deployment and assessor access remain required until a working remote URL is added and tested. No completion status here substitutes for an assessor's decision.
+
+## Sites web edition
+
+The user requested Sites deployment after the local Streamlit app was completed. The web_dashboard folder contains the deployed HTML/JavaScript edition, its exact data snapshot and a readable executed notebook. Serve it locally with `python -m http.server 8765 --directory web_dashboard`. Filters, descriptive summaries, histogram, smoking box plot, regional bars and age/BMI scatter plots run in the browser. No Python server or external chart CDN is required for this edition. See evidence/sites_deployment.md for deployment and verification details.
 
 ## Deploy to Streamlit Community Cloud
 
