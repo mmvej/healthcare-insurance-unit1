@@ -55,3 +55,7 @@ Added a compact guide immediately below the page title and before filters/charts
 ## Remove scattered small print
 
 Removed the subtitle, unit-assumption line, header badges, filter hint, general chart commentary, chart captions, table captions and standalone acknowledgement footer from the main dashboard. Essential source/unit assumptions, chart-reading details and AI attribution are consolidated inside the existing expandable source section. Definitions remain, with larger type. Removed the corresponding unused story DOM update so filters continue to render without a missing-element error. JavaScript syntax and structural checks passed; chart containers and controls are preserved.
+
+## Explanations attached to visuals
+
+Added normal-sized interpretation directly below each of the eight charts and the regional table. Explanations are calculated from the current selection, including means, medians, differences/ratios, within-smoking Pearson correlations, regional rankings, within-smoking sex comparisons and dependant-group sizes. They explain implications and relevant limits rather than repeating generic captions. One-group and insufficient-variation cases have specific fallback wording. Browser review confirmed readable placement; a smoking=yes filter changed the record count to 274, removed the two-group comparison, and updated BMI correlation to 0.81. Full-sample figures agree with the earlier executed Python summaries. JavaScript syntax check passed.
