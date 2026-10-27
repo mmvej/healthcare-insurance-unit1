@@ -35,3 +35,7 @@ Deployment succeeded: appgdep_6ae10253c5a881918a78567f99db4078
 ## Relationship narrative
 
 27 October 2026: added 'What the data tells us' above the filters, covering smoking, age, BMI, region, sex and covered dependants in relation to charges. Figures were recomputed from the cleaned CSV using pandas group summaries and Pearson correlations. The narrative reports counts, means/medians, within-smoking correlations, different regional rankings and the reversal of the sex-group mean comparison within non-smokers. Full-sample scope is stated explicitly so fixed findings are not misrepresented as filtered results. The analysis remains descriptive and does not claim causal or fully adjusted effects.
+
+## Default dark mode
+
+Added a keyboard-accessible Dark mode switch, defaulting to dark for new visitors. Valid light/dark preferences are remembered in localStorage; storage failure falls back safely to dark. Theme is restored before first paint. Page, controls, table text, chart axes and chart series use corresponding theme colours. Browser checks confirmed default dark, switching to light, persistence after reload and switching back. Explicit chart palette values avoid a browser colour-transformation issue seen with CSS-variable SVG fills; computed blue/orange series colours were rechecked. JavaScript syntax validation passed. Data calculations were unchanged.
