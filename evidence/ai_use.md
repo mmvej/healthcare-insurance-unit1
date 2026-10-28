@@ -37,3 +37,8 @@ The final full-sample version is saved in management_narrative.txt. Tests check 
 ## Limits and attribution
 
 AI helped research the business case, write code and documentation, and structure the narrative. Automated checking cannot establish missing provenance, clinical accuracy or sampling representativeness. No claim of personal learning, independent student authorship or manually performed checks is invented. No private health records, passwords or API keys were supplied as analysis inputs. The same acknowledgement appears in the notebook, README and dashboard.
+
+
+## Streamlit parity revision — 28 October 2026
+
+The user requested finishing the migration to match the Sites report. Codex completed the native eight-chart implementation, selection-specific explanations, natural smoking labels, themes, reset control and supporting definitions/conclusion. USD is a display assumption, as stated in the source expander; no conversion was applied. Python summaries support the additional sex/dependant comparisons; these extend the original notebook's six figures. The query-parameter test was corrected to the installed AppTest string interface and rerun. These are assistant-made changes, not evidence of independent student judgement.

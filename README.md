@@ -8,7 +8,7 @@ Repository URL: https://github.com/mmvej/healthcare-insurance-unit1
 
 Sites web dashboard: https://healthcare-insurance-unit1-mmvej.moseth.chatgpt.site (private to the owner by default). This browser-based edition uses the same cleaned records and descriptive calculations. Its source is in web_dashboard/.
 
-Deployed Streamlit URL: still pending. Sites does not host the Python Streamlit server. The brief specifically requires deployed Streamlit and an assessor-accessible URL; the Sites alternative needs assessor agreement, and private access does not establish assessor access.
+Deployed Streamlit dashboard: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/ (public). The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
 
 ## Questions and findings
 
@@ -76,18 +76,20 @@ CSV is sufficient for this static sample; a controlled database would be prefera
 | 4.1 | Source, dictionary, quality checks, lineage, storage and reload validation |
 | 4.2 | Handling justifications, permissions, privacy, security, ethics and standards |
 
-Deployment and assessor access remain required until a working remote URL is added and tested. No completion status here substitutes for an assessor's decision.
+The public Streamlit URL above is the dashboard delivery link. Final college submission and personal review remain with the student.
 
 ## Sites web edition
 
 The user requested Sites deployment after the local Streamlit app was completed. The web_dashboard folder contains the deployed HTML/JavaScript edition, its exact data snapshot and a readable executed notebook. Serve it locally with `python -m http.server 8765 --directory web_dashboard`. Filters, descriptive summaries, histogram, smoking box plot, regional bars and age/BMI scatter plots run in the browser. No Python server or external chart CDN is required for this edition. See evidence/sites_deployment.md for deployment and verification details.
 
-## Deploy to Streamlit Community Cloud
+## Streamlit deployment
 
-After signing in to [Streamlit Community Cloud](https://share.streamlit.io/), create an app from this repository, branch main, entrypoint app.py. Select the tested Python version if available and install requirements.txt. The source snapshot is included and no secrets are required. Choose an available app URL. Check that the public assessor link loads, that all charts appear, that selecting southeast and smoking=yes gives 91 records, and that clearing a filter shows the empty message. Record the actual URL and remote test outcome here and in evidence/testing.md. Do not claim local tests establish remote access.
+The existing Community Cloud app follows `main`, entrypoint `app.py`, in the GitHub repository above. Source updates trigger a rebuild. No secrets are required. See `evidence/testing.md` for version-specific checks. The Sites edition remains a supplementary version.
+
+The brief is copied into the local project folder for reference; it is not included in the public deployment source.
 
 ## References and AI acknowledgement
 
 References are listed in the notebook beside the relevant business and handling discussion: Kaggle; AHRQ HCUP; CMS risk adjustment and stratification; AHRQ risk/severity adjustment; ICO health-data guidance; Creative Commons CC0; and HL7 FHIR.
 
-OpenAI Codex helped prepare the analysis, code, documentation and narrative. This is an AI-assisted assignment draft. The student should review and understand all content, make any personal revisions, and follow the college's attribution rules. The AI record reports the actual session and does not invent independent student work or personal learning experiences. The assignment brief was supplied; the separate referenced Code Institute handbook was not supplied or independently reviewed.
+OpenAI Codex helped prepare the analysis, code, documentation and narrative. This is an AI-assisted assignment draft. The student should review and understand all content, make any personal revisions, and follow the college's attribution rules. The AI record reports the actual session and does not invent independent student work or personal learning experiences. A local copy of the assignment brief is `Unit_1_Healthcare_Insurance_Assignment_Brief_v5.pdf`; the separate referenced Code Institute handbook was not supplied or independently reviewed.

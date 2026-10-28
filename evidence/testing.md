@@ -1,5 +1,23 @@
 # Testing and delivery record
 
+## Streamlit migration — 28 October 2026
+
+Public dashboard: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/
+Repository: https://github.com/mmvej/healthcare-insurance-unit1
+
+The native report now has the Sites edition's eight comparisons, chart-linked explanations, three filters, reset, dark/light colours, summary metrics, regional table, dictionary, source notes and full-sample conclusion. Charts are Python/Matplotlib figures inside native Streamlit controls. Sites hover tooltips and browser-local theme storage are replaced by native figure display and a theme URL parameter; the layout is adapted to Streamlit.
+
+Automated suite: 15 passed, covering independent raw-CSV calculations, data validation, default/partial/empty selections, all eight images, single-record charts, theme switching, 274 smokers, 91 southeast smokers, and reset to 1,338 while preserving the selected theme. Ruff passed. The previous failing theme test expected a list; the installed AppTest returns a string. The assertion now checks the actual interface.
+
+Local browser review confirmed both theme states and the eight chart sections, definitions and conclusion. Theme CSS was refined after light-mode review exposed dark native controls. The extra comparisons use the same cleaned CSV and pandas summaries as the original notebook. They extend its six saved figures; the notebook itself has not been rewritten by this migration.
+
+The assignment PDF was copied locally and excluded from the public source update. The remote .devcontainer addition was preserved by fast-forward synchronisation. Final college submission and personal review remain with the student.
+
+## Historical checks — 27 October 2026
+
+The record below predates the deployed Streamlit app and the migration above; its pending statements describe that earlier session only.
+
+
 Date: 27 October 2026. Checks performed by the assistant in this session.
 
 ## Notebook and calculations
