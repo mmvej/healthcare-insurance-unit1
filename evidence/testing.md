@@ -15,6 +15,8 @@ The assignment PDF was copied locally and excluded from the public source update
 
 Live deployment verification: commit ca6c70a loaded on the existing public Streamlit URL. The browser showed all eight chart sections, 1,338 records / mean 13,270.42 / median 9,382.03, then 274 smokers / mean 32,050.23 / median 34,456.35 with updated explanations. Reset restored 1,338. Light-mode native controls were visibly readable. A plot export background mismatch found in the live review was corrected by explicitly preserving each figure's theme background.
 
+Final live check: revision 9e061f7 rendered themed charts without deprecation notices. The sex/dependant comparisons and their explanations were visually inspected on the deployed page; screenshot saved as streamlit_migration_live.png. Final suite: 15 passed; Ruff passed.
+
 ## Historical checks — 27 October 2026
 
 The record below predates the deployed Streamlit app and the migration above; its pending statements describe that earlier session only.
