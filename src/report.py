@@ -171,20 +171,18 @@ def explanations(frame):
         a, b = no.charges.mean(), yes.charges.mean()
         group = "smoking" if b >= a else "non-smoking"
         ratio = (
-            f"Smokers’ mean charges are {b / a:.2f} times those of non-smokers. "
+            f"Smokers’ mean costs are {b / a:.2f} times those of non-smokers. "
             if a
             else ""
         )
         out["smokingcomparison"] = (
-            f"The {group} group has higher average charges, with a gap of ${abs(b - a):,.2f}. "
+            f"The {group} group has higher average costs, with a gap of ${abs(b - a):,.2f}. "
             + ratio
-            + "This is an observed group difference, not an estimate of what smoking "
-            "adds to an individual’s costs."
         )
         if yes.charges.median() > no.charges.median():
             pattern = (
                 "The higher median for smokers shows that the difference extends to "
-                "typical records, rather than only a few very high charges."
+                "typical records, rather than only a few unusually large amounts."
             )
         elif yes.charges.median() < no.charges.median():
             pattern = (
@@ -194,22 +192,22 @@ def explanations(frame):
         else:
             pattern = "The medians coincide; the boxes still show variation within each group."
         out["box"] = (
-            "The boxes show the middle half of each group’s charges. " + pattern
+            "The boxes show the middle half of each group’s recorded costs. " + pattern
         )
     else:
         group = "smokers" if len(yes) else "non-smokers"
         out["smokingcomparison"] = (
             f"Only {group} are selected. Select both smoking groups "
-            "to compare their charges."
+            "to compare their costs."
         )
         out["box"] = (
-            "The box shows how much charges vary within the selected group; "
+            "The box shows how much costs vary within the selected group; "
             "the centre line marks the median."
         )
     difference = frame.charges.mean() - frame.charges.median()
     out["hist"] = (
-        "Higher charges pull the mean above the median. The average therefore exceeds the "
-        "charge of the middle record, so the median is useful when describing a typical record."
+        "Larger amounts pull the mean above the median. The average therefore exceeds the "
+        "cost of the middle record, making the median useful for describing a typical case."
         if difference > 0
         else "The mean falls below the median. The distribution adds context that a single average would miss."
         if difference < 0
@@ -222,12 +220,11 @@ def explanations(frame):
             "Both measures rank the same region first."
             if mean_region == median_region
             else "Different rankings show that the region with the largest average "
-            "is not necessarily the one with the largest typical charge."
+            "is not necessarily the one with the largest typical cost."
         )
         out["regionchart"] = (
             f"{mean_region.title()} has the highest mean; {median_region} "
-            f"has the highest median. {pattern} Population mix can influence "
-            "these comparisons."
+            f"has the highest median. {pattern}"
         )
     else:
         out["regionchart"] = (
@@ -240,9 +237,9 @@ def explanations(frame):
         if r is None:
             text = f"There is not enough variation or enough records to summarise the {label}–charge relationship."
         elif abs(r) < 0.15:
-            text = f"{label.capitalize() if key == 'age' else label} shows little overall linear relationship with charges (correlation {r:.2f})."
+            text = f"{label.capitalize() if key == 'age' else label} shows little overall linear relationship with medical costs (correlation {r:.2f})."
         else:
-            text = f"{'Higher' if r > 0 else 'Lower'} {label} tends to accompany higher charges (correlation {r:.2f})."
+            text = f"{'Higher' if r > 0 else 'Lower'} {label} tends to accompany higher costs (correlation {r:.2f})."
         rn, ry = correlation(no, key), correlation(yes, key)
         if rn is not None and ry is not None:
             text += f" The correlation is {rn:.2f} among non-smokers and {ry:.2f} among smokers. "
@@ -252,7 +249,7 @@ def explanations(frame):
                 else "The markers show the pattern within each smoking group."
             )
         else:
-            text += " The spread shows that this variable alone does not explain individual charges."
+            text += " The spread shows that this variable alone does not explain individual costs."
         out[chart_id] = text
     comparisons = []
     for group in ["no", "yes"]:
@@ -265,10 +262,10 @@ def explanations(frame):
         category = "smokers" if group == "yes" else "non-smokers"
         higher, lower = ("female", "male") if delta > 0 else ("male", "female")
         sex_text.append(
-            f"Among {category}, the {higher} group has higher average charges "
+            f"Among {category}, the {higher} group has higher average costs "
             f"than the {lower} group."
             if delta
-            else f"Among {category}, both sex groups have the same average charges."
+            else f"Among {category}, both sex groups have the same average costs."
         )
     if len(comparisons) == 2 and comparisons[0][1] * comparisons[1][1] < 0:
         sex_text.append(
@@ -294,8 +291,8 @@ def explanations(frame):
             "Means increase across the selected categories, but this does not establish "
             "that each extra dependant raises charges."
             if rising
-            else "Average charges do not rise consistently with dependant count, so there "
-            "is no simple “more dependants, higher charges” pattern."
+            else "Average costs do not rise consistently with dependant count, so there "
+            "is no simple “more dependants, higher costs” pattern."
         )
         if (children["count"] < 30).any():
             text += " The smaller groups shown in the chart should be interpreted cautiously."
@@ -307,7 +304,6 @@ def explanations(frame):
         )
     out["groups"] = (
         "Compare regions within each smoking group to see whether the overall "
-        "regional pattern remains. These comparisons still do not control for "
-        "age, BMI or clinical needs."
+        "regional pattern remains."
     )
     return out
