@@ -183,7 +183,8 @@ definitions = re.search(
     source,
     re.DOTALL,
 ).group()
-st.html('<div class="report-definitions">' + definitions + "</div>")
+with st.expander("What each variable means and summary measures"):
+    st.html('<div class="report-definitions">' + definitions + "</div>")
 with st.expander("Source, limitations and project files"):
     details = re.search(r"<details>.*?</details>", source, re.DOTALL).group()
     details = re.sub(
@@ -211,4 +212,5 @@ conclusion = re.search(
     source,
     re.DOTALL,
 ).group()
-st.html('<div class="report-definitions">' + conclusion + "</div>")
+with st.expander("Conclusion"):
+    st.html('<div class="report-definitions">' + conclusion + "</div>")
