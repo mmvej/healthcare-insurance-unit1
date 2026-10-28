@@ -34,7 +34,9 @@ def test_single_group_and_tiny_selection():
 
 
 def test_native_theme_and_report_content():
-    app = AppTest.from_file(str(ROOT / 'app.py'), default_timeout=90).run()
+    app = AppTest.from_file(str(ROOT / 'app.py'), default_timeout=90)
+    app.query_params['theme'] = 'light'
+    app.run()
     assert not app.exception
     assert app.toggle[0].value is True
     assert len(app.get('image')) == 8

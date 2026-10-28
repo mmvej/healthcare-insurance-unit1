@@ -17,11 +17,15 @@ def remember_theme():
     st.query_params["theme"] = "dark" if st.session_state.dark_mode else "light"
 
 
+# Each new visit starts dark, including links carrying an older light preference.
+if "dark_mode" not in st.session_state:
+    st.session_state.dark_mode = True
+    st.query_params["theme"] = "dark"
+
 heading, theme_control = st.columns([5, 1])
 with theme_control:
     dark = st.toggle(
         "Dark mode",
-        value=st.query_params.get("theme", "dark") != "light",
         key="dark_mode",
         on_change=remember_theme,
     )
@@ -48,6 +52,10 @@ st.markdown(
 [data-baseweb="switch"]>div:first-child {{background:{border}}}
 [data-testid="stMainBlockContainer"] {{max-width:1240px;padding-top:3rem}}
 h1 {{font-size:2rem!important}}
+.regional-table {{overflow-x:auto;border:1px solid {border};border-radius:8px;background:{surface};color:{text}}}
+.regional-table table {{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}}
+.regional-table th,.regional-table td {{padding:12px;border-bottom:1px solid {border};text-align:right;white-space:nowrap;background:{surface};color:{text}}}
+.regional-table th:first-child,.regional-table td:first-child,.regional-table th:nth-child(2),.regional-table td:nth-child(2) {{text-align:left}}
 .report-definitions table {{width:100%;border-collapse:collapse;font-size:15px}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}}
@@ -157,7 +165,15 @@ else:
             "std": "SD ($)",
         }
     )
-    st.dataframe(table.style.format({"Mean ($)": "{:,.2f}", "Median ($)": "{:,.2f}", "SD ($)": "{:,.2f}"}, na_rep="—"), hide_index=True)
+    st.html(
+        '<div class="regional-table">'
+        + table.to_html(
+            index=False, border=0, na_rep="—",
+            formatters={column: lambda value: f"{value:,.2f}"
+                        for column in ["Mean ($)", "Median ($)", "SD ($)"]},
+        )
+        + "</div>"
+    )
     st.write(notes["groups"])
 
 # Reuse the authored definitions and conclusion so their wording stays aligned.
