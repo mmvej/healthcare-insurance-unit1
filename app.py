@@ -93,7 +93,7 @@ def visual(kind, title, explanation):
     st.subheader(title)
     figure = report_chart(selected, kind, dark=dark)
     with plt.rc_context(chart_style(dark)):
-        st.pyplot(figure, facecolor=figure.get_facecolor(), alt=title)
+        st.pyplot(figure, alt=title)
     plt.close(figure)
     st.write(explanation)
 
