@@ -152,7 +152,7 @@ else:
     )
     visual(
         "childrencomparison",
-        "Covered dependants and charges (USD)",
+        "Children and charges (USD)",
         notes["childrencomparison"],
     )
     st.subheader("Within-region smoking groups")

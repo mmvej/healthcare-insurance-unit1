@@ -84,6 +84,8 @@ def report_chart(frame, kind, dark=True):
                 ],
             )
             ax.set_ylim(0, groups[["mean", "median"]].max().max() * 1.23)
+            if kind == "childrencomparison":
+                ax.set_xlabel("Number of children")
             ax.legend()
         elif kind == "sexcomparison":
             sexes = [s for s in ["female", "male"] if frame.sex.eq(s).any()]
@@ -298,18 +300,18 @@ def explanations(frame):
         rising = children["mean"].is_monotonic_increasing
         text = (
             "Means increase across the selected categories, but this does not establish "
-            "that each extra dependant raises charges."
+            "that each additional child raises costs."
             if rising
-            else "Average costs do not rise consistently with dependant count, so there "
-            "is no simple “more dependants, higher costs” pattern."
+            else "Average costs do not rise consistently with number of children, so there "
+            "is no simple “more children, higher costs” pattern."
         )
         if (children["count"] < 30).any():
             text += " The smaller groups shown in the chart should be interpreted cautiously."
         out["childrencomparison"] = text
     else:
         out["childrencomparison"] = (
-            f"Only the {children.index[0]}-dependant category appears. "
-            "Widen the filters to compare dependant counts."
+            f"Only the {children.index[0]}-child category appears. "
+            "Widen the filters to compare numbers of children."
         )
     out["groups"] = (
         "Compare regions within each smoking group to see whether the overall "
