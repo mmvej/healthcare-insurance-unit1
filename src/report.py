@@ -147,6 +147,10 @@ def report_chart(frame, kind, dark=True):
             for group, colour, marker in [("no", blue, "o"), ("yes", orange, "^")]:
                 part = frame.loc[frame.smoker.eq(group)]
                 if not part.empty:
+                    r = correlation(part, key) if kind == "bmichart" else None
+                    label = SMOKING[group]
+                    if kind == "bmichart":
+                        label += f" (r = {r:.2f})" if r is not None else " (r unavailable)"
                     ax.scatter(
                         part[key],
                         part.charges,
@@ -154,8 +158,13 @@ def report_chart(frame, kind, dark=True):
                         marker=marker,
                         alpha=0.55,
                         s=23,
-                        label=SMOKING[group],
+                        label=label,
                     )
+                    if kind == "bmichart" and r is not None:
+                        slope, intercept = np.polyfit(part.bmi, part.charges, 1)
+                        x = np.array([part.bmi.min(), part.bmi.max()])
+                        ax.plot(x, slope * x + intercept, color=colour,
+                                linewidth=2.2, linestyle="--")
             ax.set_xlabel("Age (years)" if key == "age" else "BMI (kg/m²)")
             ax.legend()
         else:

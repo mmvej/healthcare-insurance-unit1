@@ -61,3 +61,27 @@ def test_native_theme_and_report_content():
     assert app.metric[0].value == '1,338'
     assert len(app.get('image')) == 8
     assert app.toggle[0].value is False
+
+
+def test_bmi_trends_follow_selected_smoking_groups():
+    _, frame, _ = prepare_data()
+    figure = report_chart(frame, 'bmichart')
+    axes = figure.axes[0]
+    assert len(axes.lines) == 2
+    labels = axes.get_legend_handles_labels()[1]
+    assert labels == ['Non-smokers (r = 0.08)', 'Smokers (r = 0.81)']
+    for line, group in zip(axes.lines, ['no', 'yes']):
+        part = frame.loc[frame.smoker.eq(group)]
+        # Least-squares lines pass through their group's centroid.
+        x, y = line.get_data()
+        estimate = y[0] + (y[1] - y[0]) * (part.bmi.mean() - x[0]) / (x[1] - x[0])
+        assert abs(estimate - part.charges.mean()) < 1e-6
+    plt.close(figure)
+    selected = frame.loc[frame.smoker.eq('yes')]
+    figure = report_chart(selected, 'bmichart')
+    assert len(figure.axes[0].lines) == 1
+    plt.close(figure)
+    figure = report_chart(selected.head(1), 'bmichart')
+    assert len(figure.axes[0].lines) == 0
+    assert 'unavailable' in figure.axes[0].get_legend_handles_labels()[1][0]
+    plt.close(figure)

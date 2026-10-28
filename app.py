@@ -56,6 +56,9 @@ h1 {{font-size:2rem!important}}
 .regional-table table {{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}}
 .regional-table th,.regional-table td {{padding:12px;border-bottom:1px solid {border};text-align:right;white-space:nowrap;background:{surface};color:{text}}}
 .regional-table th:first-child,.regional-table td:first-child,.regional-table th:nth-child(2),.regional-table td:nth-child(2) {{text-align:left}}
+[data-testid="stExpander"] details,[data-testid="stExpander"] summary {{background-color:{surface}!important;color:{text}!important}}
+[data-testid="stExpander"] summary *,[data-testid="stExpander"] details[open] summary * {{color:{text}!important}}
+[data-testid="stExpander"] summary svg {{fill:currentColor}}
 .report-definitions table {{width:100%;border-collapse:collapse;font-size:15px}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}}
