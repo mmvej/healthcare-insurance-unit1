@@ -7,7 +7,7 @@ import pandas as pd
 import streamlit as st
 
 from src.analysis import AGE_LABELS, CLEAN, ROOT, filter_data, summary, validate
-from src.report import SMOKING, explanations, report_chart
+from src.report import SMOKING, chart_style, explanations, report_chart
 
 TITLE = "Medical insurance charges (USD) by age, BMI, smoking status and region"
 st.set_page_config(page_title=TITLE, layout="wide")
@@ -92,7 +92,8 @@ selected = filter_data(data, regions, smokers, bands)
 def visual(kind, title, explanation):
     st.subheader(title)
     figure = report_chart(selected, kind, dark=dark)
-    st.pyplot(figure)
+    with plt.rc_context(chart_style(dark)):
+        st.pyplot(figure, facecolor=figure.get_facecolor(), alt=title)
     plt.close(figure)
     st.write(explanation)
 

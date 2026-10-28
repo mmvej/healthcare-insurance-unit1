@@ -15,13 +15,12 @@ def correlation(frame, field):
     return frame[field].corr(frame.charges)
 
 
-def report_chart(frame, kind, dark=True):
-    """Render eight complementary comparisons, with each useful count shown once."""
+def chart_style(dark=True):
+    """Keep theme colours active during both construction and image export."""
     background, text, grid = (
         ("#18232f", "#e8eef3", "#354657") if dark else ("#ffffff", "#20313e", "#dfe5e8")
     )
-    blue, orange = ("#8bbfe8", "#efb86f") if dark else ("#245c88", "#a95b12")
-    rc = {
+    return {
         "figure.facecolor": background,
         "axes.facecolor": background,
         "text.color": text,
@@ -35,7 +34,14 @@ def report_chart(frame, kind, dark=True):
         "legend.edgecolor": grid,
         "savefig.facecolor": background,
     }
-    with plt.rc_context(rc):
+
+
+def report_chart(frame, kind, dark=True):
+    """Render eight complementary comparisons, with each useful count shown once."""
+    background = "#18232f" if dark else "#ffffff"
+    text = "#e8eef3" if dark else "#20313e"
+    blue, orange = ("#8bbfe8", "#efb86f") if dark else ("#245c88", "#a95b12")
+    with plt.rc_context(chart_style(dark)):
         fig, ax = plt.subplots(figsize=(10, 4.8), layout="constrained")
         ax.grid(axis="y", alpha=0.6)
         ax.set_axisbelow(True)
