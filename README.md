@@ -6,9 +6,8 @@ This project explores recorded medical insurance charges in the Healthcare Insur
 
 Repository URL: https://github.com/mmvej/healthcare-insurance-unit1
 
-Sites web dashboard: https://healthcare-insurance-unit1-mmvej.moseth.chatgpt.site (private to the owner by default). This browser-based edition uses the same cleaned records and descriptive calculations. Its source is in web_dashboard/.
 
-Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **Verified 29 October 2026:** the repository is public and the dashboard loads successfully after its restart. Live checks confirmed the default figures, smoking filter, empty-selection message and reset. The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
+Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **Verified 29 October 2026:** the repository is public and the dashboard loads successfully after its restart. Live checks confirmed the default figures, smoking filter, empty-selection message and reset. The Python dashboard has eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
 
 ## Questions and findings
 
@@ -38,16 +37,6 @@ ruff check src app.py tests scripts
 ```
 
 The cleaned CSV is included. To regenerate it, run the notebook, which preserves the raw file, prepares the data, validates it, saves it and checks the reload. No API key is required. The notebook's kernel must use the environment where requirements were installed. Its opening cell resolves data paths from either the project root or the notebooks folder.
-
-## VS Code notebooks
-
-Open this project folder in VS Code. The workspace uses `.venv/bin/python`; the notebook kernel is **Healthcare Insurance (.venv)**. The Python and Jupyter extensions are required and listed in the workspace recommendations.
-
-If you recreate `.venv`, install `requirements.txt`, then register its kernel:
-
-```bash
-.venv/bin/python -m ipykernel install --prefix .venv --name healthcare-insurance --display-name "Healthcare Insurance (.venv)"
-```
 
 ## Files and evidence
 
@@ -88,13 +77,9 @@ CSV is sufficient for this static sample; a controlled database would be prefera
 
 The Streamlit URL above is the working dashboard delivery link. Final college submission and personal review remain with the student.
 
-## Sites web edition
-
-The user requested Sites deployment after the local Streamlit app was completed. The web_dashboard folder contains the deployed HTML/JavaScript edition, its exact data snapshot and a readable executed notebook. Serve it locally with `python -m http.server 8765 --directory web_dashboard`. Filters, descriptive summaries, histogram, smoking box plot, regional bars and age/BMI scatter plots run in the browser. No Python server or external chart CDN is required for this edition. See evidence/sites_deployment.md for deployment and verification details.
-
 ## Streamlit deployment
 
-The existing Community Cloud app follows `main`, entrypoint `app.py`, in the GitHub repository above. Source updates trigger a rebuild. No secrets are required. See `evidence/testing.md` for version-specific checks. The Sites edition remains a supplementary version.
+The existing Community Cloud app follows `main`, entrypoint `app.py`, in the GitHub repository above. Source updates trigger a rebuild. No secrets are required. See `evidence/testing.md` for version-specific checks.
 
 The brief is copied into the local project folder for reference; it is not included in the public deployment source.
 

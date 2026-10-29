@@ -7814,45 +7814,12 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Task-1:-Business-case-(1.1%E2%80%931.2)">Task 1: Business case (1.1–1.2)<a class="anchor-link" href="#Task-1:-Business-case-(1.1%E2%80%931.2)">¶</a></h2><p>Healthcare insurers can use analytics in several ways:</p>
-<table>
-<thead>
-<tr>
-<th>Use</th>
-<th>Data needed</th>
-<th>Example decision and benefit</th>
-<th>Limitation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Budget planning</td>
-<td>Past charges, service dates and membership numbers</td>
-<td>Plan next year's budget using spending per member</td>
-<td>Past costs may not reflect future demand</td>
-</tr>
-<tr>
-<td>Comparing groups</td>
-<td>Charges, age and health conditions</td>
-<td>Investigate why one group has higher costs</td>
-<td>Groups may have different health needs</td>
-</tr>
-<tr>
-<td>Reviewing services</td>
-<td>Treatment costs, outcomes and patient health before treatment</td>
-<td>Decide whether to continue a support programme</td>
-<td>A fair comparison group is needed</td>
-</tr>
-</tbody>
-</table>
-<p>These applications are discussed by AHRQ and CMS [2–3]. This dataset supports group comparisons, but it lacks the dates and clinical information needed for forecasting or treatment evaluation.</p>
-<p>The audience is a finance or planning team. One overall average may hide large differences, so the questions are:</p>
+<h2 id="Task-1:-Business-case-(1.1%E2%80%931.2)">Task 1: Business case (1.1–1.2)<a class="anchor-link" href="#Task-1:-Business-case-(1.1%E2%80%931.2)">¶</a></h2><p>The audience is a finance or planning team. One overall average may hide large differences, so the questions are:</p>
 <ol>
 <li>How do charges differ between smokers and non-smokers?</li>
 <li>How are age and BMI related to charges?</li>
 <li>How do charges compare across regions?</li>
 </ol>
-<p>AI can help suggest code and explain results, but its calculations and wording need checking. No confidential patient records are used.</p>
 <h3 id="How-the-applications-support-decisions-(1.1)">How the applications support decisions (1.1)<a class="anchor-link" href="#How-the-applications-support-decisions-(1.1)">¶</a></h3><p>AHRQ describes healthcare data being used to study costs, service use and treatment outcomes [2]. The following are practical examples of those applications, rather than findings from this CSV.</p>
 <ul>
 <li><strong>Budget planning:</strong> A planning team could combine dated charges with membership totals to estimate spending per member and identify where more resources may be needed. For example, rising service use could prompt a review of next year's budget. This supports resource allocation, but changes in prices or membership can make past averages misleading.</li>
@@ -9447,8 +9414,6 @@ Dashboard group counts, summaries and BMI lines checked.
 <h2 id="Task-3:-AI-use-and-findings-(3.1%E2%80%933.3)">Task 3: AI use and findings (3.1–3.3)<a class="anchor-link" href="#Task-3:-AI-use-and-findings-(3.1%E2%80%933.3)">¶</a></h2><p>Codex helped draft the analysis, code and explanations. The repeated-row check shows why generated code needs running. Suggestions to fill missing values or remove all high charges were not used because the data did not justify them. The original prompt, narrative draft and revisions are kept in <a href="../evidence/ai_use.md">the AI-use record</a>.</p>
 <p>The management summary was revised to include group sizes, avoid claiming cause and effect, and state that the currency is unconfirmed.</p>
 <p><strong>Summary for the planning team:</strong> Charges vary widely. Smokers have higher average charges in this sample, and age and BMI show different patterns across smoking groups. Regional averages should be read alongside group sizes and medians. These results suggest areas to investigate, rather than a basis for setting individual premiums.</p>
-<p>All three questions were answered as descriptions of this sample. The analysis cannot explain the causes or predict current costs because dates, diagnoses and sampling details are missing. There are also fewer smokers than non-smokers.</p>
-<p>A mean-only chart would be simpler, but would hide the spread shown by the box plot. A useful next step would be to obtain dated claims and membership data, with permission, to compare costs over time. AI helped organise the work, but cannot supply missing source information.</p>
 <h3 id="AI-decisions-and-checks-(3.1)">AI decisions and checks (3.1)<a class="anchor-link" href="#AI-decisions-and-checks-(3.1)">¶</a></h3><p>Codex suits this task because it can suggest pandas expressions, explain errors and draft text alongside the project files. The original prompt, response and narrative revision are retained in the AI-use record. The duplicate-check correction was accepted after the revised expression identified both matching rows. Automatic imputation and deletion of high charges were rejected because there were no missing values and no evidence that the high charges were errors. The management draft was modified to add group sizes and avoid a causal claim; its figures were checked against Python summaries and independent raw-CSV calculations.</p>
 <p>These are documented decisions from the AI-assisted workflow. They do not demonstrate the student's personal review. Before submission, the student needs to check the choices against the source and explain, in their own words, why the duplicate was retained, why regional averages need subgroup checks, and why these results cannot set individual premiums. Any resulting changes should be recorded in the AI-use record.</p>
 <h3 id="Evaluation-against-the-questions-(3.3)">Evaluation against the questions (3.3)<a class="anchor-link" href="#Evaluation-against-the-questions-(3.3)">¶</a></h3><ul>
