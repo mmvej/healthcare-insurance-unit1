@@ -117,44 +117,16 @@ def report_chart(frame, kind, dark=True):
             ax.set_ylim(0, largest * 1.28)
             ax.legend()
         elif kind == "hist":
-            counts, edges, _ = ax.hist(frame.charges, bins=30, color=blue, edgecolor=background)
-            median, mean = frame.charges.median(), frame.charges.mean()
-            peak = int(counts.argmax())
-            highest = float(counts.max())
-            ax.set_ylim(0, highest * 1.3)
+            ax.hist(frame.charges, bins=30, color=blue, edgecolor=background)
+            ax.axvline(frame.charges.median(), color=text, linestyle="--", label="Median")
             ax.set(xlabel="Charges ($)", ylabel="Records")
-
-            def label_at(label, point, position):
-                ax.annotate(
-                    label, xy=point, xytext=position, textcoords='axes fraction',
-                    ha='center', va='top', fontsize=10, color=text,
-                    bbox={'boxstyle': 'round,pad=0.4', 'facecolor': background,
-                          'edgecolor': text, 'alpha': 0.95},
-                    arrowprops={'arrowstyle': '->', 'color': text, 'linewidth': 1.1},
-                )
-
-            ax.axvline(median, color=text, linestyle='--', linewidth=1.5)
-            if frame.charges.nunique() == 1:
-                label_at(f"All charges: {median:,.0f} USD", (median, highest), (0.5, 0.96))
-            else:
-                ax.axvline(mean, color=orange, linestyle=':', linewidth=1.5)
-                label_at(
-                    f"Most populated interval\n{edges[peak]:,.0f}–{edges[peak + 1]:,.0f} USD",
-                    ((edges[peak] + edges[peak + 1]) / 2, highest), (0.32, 0.97),
-                )
-                label_at(f"Median: {median:,.0f} USD", (median, highest * 0.58), (0.43, 0.69))
-                label_at(f"Mean: {mean:,.0f} USD", (mean, highest * 0.28), (0.76, 0.88))
-                skew = frame.charges.skew() if len(frame) >= 3 else 0
-                lower = skew < -0.5
-                tail = frame.charges.quantile(0.05 if lower else 0.95)
-                index = min(max(int(np.searchsorted(edges, tail, side='right') - 1), 0), 29)
-                name = 'Lower tail' if lower else 'Right tail' if skew > 0.5 else 'High-charge end'
-                label_at(name, (tail, counts[index]), (0.76, 0.47))
+            ax.legend()
         elif kind == "box":
+            plotted = []
             for i, (group, colour) in enumerate([("no", blue), ("yes", orange)]):
                 values = frame.loc[frame.smoker.eq(group), "charges"]
                 if not values.empty:
-                    ax.boxplot(
+                    artists = ax.boxplot(
                         values,
                         positions=[i],
                         widths=0.5,
@@ -169,8 +141,40 @@ def report_chart(frame, kind, dark=True):
                         capprops={"color": colour},
                         flierprops={"markeredgecolor": colour, "markersize": 3},
                     )
+                    q1, median, q3 = values.quantile([0.25, 0.5, 0.75])
+                    plotted.append((q3 - q1, i, q1, median, q3, artists))
+            _, position, q1, median, q3, artists = max(plotted, key=lambda item: item[0])
+            low = artists['whiskers'][0].get_ydata()[-1]
+            high = artists['whiskers'][1].get_ydata()[-1]
+            span = max(float(frame.charges.max() - frame.charges.min()), 1)
+            arrow = {'arrowstyle': '->', 'color': text, 'linewidth': 1}
+            label_box = {'facecolor': background, 'edgecolor': 'none', 'alpha': 0.9}
+            if q1 == q3:
+                ax.annotate(f"Q1 = median = Q3: {median:,.0f}", xy=(position, median),
+                            xytext=(position + 0.38, median + span * 0.12),
+                            color=text, fontsize=9, bbox=label_box, arrowprops=arrow)
+            else:
+                previous = -float('inf')
+                for title, y in [('Lower whisker', low), ('Q1 (25%)', q1),
+                                 ('Median', median), ('Q3 (75%)', q3), ('Upper whisker', high)]:
+                    label_y = max(y, previous + span * 0.065)
+                    ax.annotate(title, xy=(position + (0.125 if 'whisker' in title else 0.25), y),
+                                xytext=(position + 0.4, label_y), va='center',
+                                color=text, fontsize=9, bbox=label_box, arrowprops=arrow)
+                    previous = label_y
+                ax.annotate('', xy=(position - 0.34, q1), xytext=(position - 0.34, q3),
+                            arrowprops={'arrowstyle': '|-|', 'color': text})
+                ax.text(position - 0.4, (q1 + q3) / 2, 'IQR\nMiddle 50%',
+                        ha='right', va='center', color=text, fontsize=9, bbox=label_box)
+            for _, i, _, _, _, group_artists in plotted:
+                outliers = group_artists['fliers'][0].get_ydata()
+                if len(outliers):
+                    y = float(max(outliers))
+                    ax.annotate('Outliers', xy=(i, y), xytext=(i - 0.5, y + span * 0.12),
+                                color=text, fontsize=9, bbox=label_box, arrowprops=arrow)
+            ax.margins(y=0.15)
             ax.set_xticks([0, 1], ["Non-smokers", "Smokers"])
-            ax.set_xlim(-0.7, 1.7)
+            ax.set_xlim(-0.85, 1.95)
         elif kind in ["agechart", "bmichart"]:
             key = "age" if kind == "agechart" else "bmi"
             for group, colour, marker in [("no", blue, "o"), ("yes", orange, "^")]:

@@ -44,6 +44,6 @@ Chart-reading and model-method explanations are consolidated in the variable/sta
 
 The regression section is now titled “Predictive regression”. Its introduction explains learning from one set of records and checking against separate records. Table headings use “Average prediction error” and “Simple median estimate”; calculations and evaluation scope are unchanged.
 
-## Histogram labels — 29 October 2026
+## Box-plot labels — 29 October 2026
 
-Added selected-data labels inside the histogram for the most populated interval, median, mean and tail/high-charge end. The mean uses a dotted line and the median a dashed line. Directional tail wording is based on the selected skew; constant/single-record selections get one combined value label. Visual checks covered the full dataset in dark mode and smokers in light mode. A new test verifies selected-data values and the single-record fallback. All 24 tests pass.
+At the user's correction, the histogram was restored to its previous unannotated form with its median line. Labels are now inside the smoking box plot for Q1, median, Q3, lower/upper whiskers, the middle-50% IQR bracket and any outliers. Structural labels are attached to the selected group with the larger IQR to avoid duplicating them; outliers are labelled where present in either group. The single-value case uses one combined quartile/median label. Visual checks covered the full dataset in dark mode and a single-record selection in light mode. The updated test checks filtered box-plot labels, the single-record fallback and absence of histogram annotations.
