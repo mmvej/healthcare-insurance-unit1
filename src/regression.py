@@ -100,7 +100,8 @@ def interpretation(scores, predictions):
     errors = abs(predictions.actual - predictions.predicted)
     change_text = f"{abs(change):.1f}% {'lower' if change >= 0 else 'higher'} error"
     return (
-        f"Test MAE is {model:,.2f} versus {baseline:,.2f} for the baseline ({change_text}). "
-        f"For the highest-charge quarter, MAE is {errors[high].mean():,.0f}, compared "
+        f"Estimates miss actual charges by {model:,.2f} on average, versus {baseline:,.2f} "
+        f"for the simple median estimate ({change_text}). "
+        f"Average error is {errors[high].mean():,.0f} for the highest-charge quarter, compared "
         f"with {errors[~high].mean():,.0f} for the remaining records."
     )

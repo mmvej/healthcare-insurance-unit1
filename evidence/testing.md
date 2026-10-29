@@ -26,7 +26,7 @@ Test MAE: training-median baseline 7,721.87; regression 2,723.40, a 64.7% reduct
 
 Three new tests verify deterministic disjoint splitting (including duplicate groups), unchanged predictions when only test targets are altered, and independent NumPy MAE/baseline and weighted subgroup-error reconciliation. Streamlit tests now expect nine figures: eight descriptive plots and one fixed-split prediction plot. All 19 tests pass; Ruff and pip dependency checks pass. The notebook's saved prediction plot and a dark-theme rendering were visually checked for labels, readable points and a perfect-prediction reference line.
 
-Live deployment check: the “Optional predictive regression” expander opened successfully on the public Streamlit URL after commit c7ac431. It displayed 1,070 training / 268 test records, both MAEs matching the notebook, the prediction chart, smoking-group errors and limitations. The rendered dark-theme section was visually inspected; evidence is saved in `regression_live.png`.
+Live deployment check: the “Predictive regression” expander opened successfully on the public Streamlit URL after commit c7ac431. It displayed 1,070 training / 268 test records, both MAEs matching the notebook, the prediction chart, smoking-group errors and limitations. The rendered dark-theme section was visually inspected; evidence is saved in `regression_live.png`.
 
 ## Distribution explanations — 29 October 2026
 
@@ -41,3 +41,5 @@ Caption refinement: removed the lengthy chart-reading tutorial, repeated ranges/
 All eight descriptive plots, the within-region table and the prediction scatter now have brief findings computed from their displayed data. Captions cover smoking mean/median gaps, histogram skew/tail weight, box-plot centre/spread/outliers, regional mean range and rankings, overall/within-smoking correlations, sex gaps within smoking groups, child-count mean patterns and the largest within-region smoking gap. The fixed regression report compares test MAE with its baseline and compares error in the highest-charge quarter with the remaining test records. Descriptive filters do not affect this labelled fixed evaluation.
 
 Chart-reading and model-method explanations are consolidated in the variable/statistical definitions expander. Added tests independently reconcile filtered gaps, child-group rankings, correlations and prediction-error groups; a changed-data case confirms that the smoking comparison reverses when its data reverses. All 23 tests pass, fresh notebook execution succeeds, and full-sample narratives are retained in management_narrative.txt.
+
+The regression section is now titled “Predictive regression”. Its introduction explains learning from one set of records and checking against separate records. Table headings use “Average prediction error” and “Simple median estimate”; calculations and evaluation scope are unchanged.

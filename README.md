@@ -17,7 +17,7 @@ The downloaded file contains 1,338 rows and seven fields. Mean charges are 13,27
 
 These are associations within the sample. The currency, observation period, sampling coverage and exact region boundaries are not confirmed by the retrieved source. The data cannot support current financial forecasts, treatment-effect claims or individual pricing decisions. Recorded charges are not assumed to be premiums.
 
-## Optional predictive regression
+## Predictive regression
 
 The notebook and dashboard include a linear regression with a BMI–smoking interaction, using all six source predictors. A fixed grouped split retains 1,070 training rows and 268 test rows, keeping exact duplicates together. Encoding and fitting use training data only; the comparison predicts the training median. The test MAE is 2,723.40 versus 7,721.87 for the baseline (64.7% lower). MAE is measured in the original charge units, not as an accuracy percentage. Test MAE is 2,477.32 among non-smokers and 3,942.85 among smokers.
 

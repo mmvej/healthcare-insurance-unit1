@@ -178,16 +178,24 @@ else:
         )
         st.write(notes["groups"])
 
-with st.expander("Optional predictive regression"):
-    st.write("Full-dataset prediction of recorded charges from six source fields and a BMI–smoking interaction. Descriptive filters do not change this fixed evaluation.")
+with st.expander("Predictive regression"):
+    st.write("This model estimates recorded charges from age, sex, BMI, number of children, smoking status and region. It learns patterns from one part of the dataset, then checks its estimates against records it has not used for learning. The filters above do not change this evaluation.")
     train, test, scores, predictions, group_errors = regression_results(data)
-    st.write(f"Training: {len(train):,} records. Test: {len(test):,} records.")
-    st.dataframe(scores.round(2), hide_index=True)
+    st.write(f"Records used to build the model: {len(train):,}. Separate records used to check its estimates: {len(test):,}.")
+    display_scores = scores.replace({"Model": {
+        "Training-median baseline": "Simple median estimate",
+        "Linear regression + BMI/smoking interaction": "Regression estimate",
+    }}).rename(columns={"Test MAE": "Average prediction error (charge units)"})
+    st.dataframe(display_scores.round(2), hide_index=True)
     figure = prediction_chart(predictions, dark=dark)
     st.pyplot(figure, alt="Held-out predicted versus actual recorded charges")
     plt.close(figure)
     st.write(interpretation(scores, predictions))
-    st.dataframe(group_errors.rename(index={"no": "Non-smokers", "yes": "Smokers"}).round(2))
+    st.dataframe(group_errors.rename(
+        index={"no": "Non-smokers", "yes": "Smokers"},
+        columns={"records": "Records checked", "mae": "Average prediction error (charge units)"},
+    ).rename_axis("Smoking group").round(2))
+    st.write("The simple comparison uses the same typical charge—the training median—for every record. Smaller errors mean closer estimates. These results describe this sample; they do not establish reliable current-cost forecasts or suitable prices for individuals.")
 
 
 

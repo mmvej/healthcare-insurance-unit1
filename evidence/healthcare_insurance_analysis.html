@@ -7888,7 +7888,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>Matplotlib created a temporary cache directory at /var/folders/w8/gfpcq2yx3pqf8g7klkl281gr0000gn/T/matplotlib-8y9201ip because there was an issue with the default path (/Users/mmv/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+<pre>Matplotlib created a temporary cache directory at /var/folders/w8/gfpcq2yx3pqf8g7klkl281gr0000gn/T/matplotlib-z9urio7n because there was an issue with the default path (/Users/mmv/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
 </pre>
 </div>
 </div>
@@ -9501,7 +9501,7 @@ Dashboard group counts, summaries and BMI lines checked.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Optional-predictive-regression-(2.1,-2.3,-3.3)">Optional predictive regression (2.1, 2.3, 3.3)<a class="anchor-link" href="#Optional-predictive-regression-(2.1,-2.3,-3.3)">¶</a></h3><p>Can age, sex, BMI, children, smoking status and region help predict recorded charges for held-out sample records? This is an exploratory extension, not a current-cost forecast.</p>
+<h3 id="Predictive-regression-(2.1,-2.3,-3.3)">Predictive regression (2.1, 2.3, 3.3)<a class="anchor-link" href="#Predictive-regression-(2.1,-2.3,-3.3)">¶</a></h3><p>Can age, sex, BMI, children, smoking status and region help predict recorded charges for held-out sample records? This is an exploratory extension, not a current-cost forecast.</p>
 <p>A fixed seed (42) assigns about 80% of distinct source records to training and 20% to testing. Exact duplicate rows stay together to avoid leakage; all rows are retained. A pipeline fits categorical encoding and ordinary least-squares regression on training data only. A BMI × smoking interaction is specified from the earlier exploratory findings, so the BMI slope can differ between smokers and non-smokers. Age bands and charges are excluded as predictors; age is used directly. There is no model search or test-set tuning.</p>
 <p>The comparison is a baseline that predicts the <strong>training median</strong>, which suits MAE. Lower MAE means lower average absolute error, measured in the original, unconfirmed charge units. The held-out data is not used to fit coefficients or encoding. Because the full sample was explored before this extension, this is not a completely independent confirmation of model selection; external data would be needed for stronger validation.</p>
 </div>
@@ -9636,7 +9636,7 @@ Dashboard group counts, summaries and BMI lines checked.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Test MAE is 2,723.40 versus 7,721.87 for the baseline (64.7% lower error). For the highest-charge quarter, MAE is 6,108, compared with 1,595 for the remaining records.
+<pre>Estimates miss actual charges by 2,723.40 on average, versus 7,721.87 for the simple median estimate (64.7% lower error). Average error is 6,108 for the highest-charge quarter, compared with 1,595 for the remaining records.
 </pre>
 </div>
 </div>
