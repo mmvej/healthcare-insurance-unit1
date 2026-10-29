@@ -218,7 +218,7 @@ with st.expander("Variable and statistical definitions"):
     equations = [
         None,  # Records is defined in words; keep the following formula indices aligned.
         r"\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i",
-        r"\operatorname{Median} = \begin{cases}x_{\left(\frac{n+1}{2}\right)}, & n\text{ odd} \\ \dfrac{x_{(n/2)} + x_{(n/2+1)}}{2}, & n\text{ even}\end{cases}",
+        r"\text{Median} = \text{middle value after sorting}",
         r"s = \sqrt{\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}}",
         r"\begin{aligned} Q_1 &= Q(0.25),\quad Q_3 = Q(0.75) \\ \mathrm{IQR} &= Q_3-Q_1\end{aligned}",
         r"r = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\,\sum_{i=1}^{n}(y_i-\bar{y})^2}}",
