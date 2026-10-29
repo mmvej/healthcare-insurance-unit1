@@ -187,12 +187,12 @@ def distribution_shape(values):
     )
     text = f"{sign} skew ({skew:.2f}): {shape}. "
     if len(values) < 4:
-        return text + "At least four records are needed for excess kurtosis."
+        return text + "At least four records are needed for kurtosis."
     kurtosis = values.kurt()
     sign = 'Positive' if kurtosis > 0 else 'Negative' if kurtosis < 0 else 'Zero'
     tails = 'greater' if kurtosis > 0 else 'less' if kurtosis < 0 else 'similar'
     return text + (
-        f"{sign} excess kurtosis ({kurtosis:.2f}): {tails} weight in extreme deviations "
+        f"{sign} kurtosis ({kurtosis:.2f}): {tails} weight in extreme deviations "
         "relative to the normal reference."
     )
 

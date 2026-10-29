@@ -214,6 +214,8 @@ with st.expander("Variable and statistical definitions"):
         r"s = \sqrt{\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}}",
         r"\begin{aligned} Q_1 &= Q(0.25),\quad Q_3 = Q(0.75) \\ \mathrm{IQR} &= Q_3-Q_1\end{aligned}",
         r"r = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\,\sum_{i=1}^{n}(y_i-\bar{y})^2}}",
+        r"\operatorname{Skew} = \frac{n}{(n-1)(n-2)}\sum_{i=1}^{n}\left(\frac{x_i-\bar{x}}{s}\right)^3",
+        r"\begin{aligned}\operatorname{Kurtosis} &= \frac{n(n+1)}{(n-1)(n-2)(n-3)}\sum_{i=1}^{n}\left(\frac{x_i-\bar{x}}{s}\right)^4 \\ &\quad - \frac{3(n-1)^2}{(n-2)(n-3)}\end{aligned}",
     ]
     paragraphs = re.findall(r'<p>.*?</p>', terms, re.DOTALL)
     for start in range(0, len(paragraphs), 2):
