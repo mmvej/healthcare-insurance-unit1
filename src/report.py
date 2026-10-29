@@ -341,7 +341,8 @@ def explanations(frame):
         text = f"{pattern}; the highest mean is in the {peak}-child group ({children.loc[peak, 'mean']:,.0f} USD)."
         smallest = children['count'].idxmin()
         if children.loc[smallest, 'count'] < 30:
-            text += f" The {smallest}-child estimate is based on just {int(children.loc[smallest, 'count'])} records."
+            count = int(children.loc[smallest, 'count'])
+            text += f" The {smallest}-child estimate is based on just {count} {'record' if count == 1 else 'records'}."
         out['childrencomparison'] = text
     else:
         out['childrencomparison'] = f"Only the {children.index[0]}-child category is selected; its mean is {children['mean'].iloc[0]:,.0f} USD and median {children['median'].iloc[0]:,.0f} USD."
