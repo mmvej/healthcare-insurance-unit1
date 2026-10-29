@@ -66,7 +66,6 @@ h1 {{font-size:2rem!important}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}}
 .report-definitions .terms p {{min-width:0}}
-[data-testid="stLatex"] {{overflow-x:auto;padding:8px 0}}
 .report-definitions p {{font-size:15px;line-height:1.7;color:{text}}}
 @media(max-width:760px){{.report-definitions .terms{{grid-template-columns:1fr}}.report-definitions .tablewrap{{overflow:auto}}}}
 </style>""",
@@ -215,27 +214,12 @@ with st.expander("Variable and statistical definitions"):
     terms = re.search(terms_pattern, definitions, re.DOTALL).group()
     dictionary = re.sub(terms_pattern, '', definitions, flags=re.DOTALL)
     st.html('<div class="report-definitions">' + dictionary + '</div>')
-    equations = [
-        None,  # Records is defined in words; keep the following formula indices aligned.
-        r"\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i",
-        r"\text{Median} = \text{middle value after sorting}",
-        r"s = \sqrt{\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}}",
-        r"\begin{aligned} Q_1 &= Q(0.25),\quad Q_3 = Q(0.75) \\ \mathrm{IQR} &= Q_3-Q_1\end{aligned}",
-        r"r = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\,\sum_{i=1}^{n}(y_i-\bar{y})^2}}",
-        r"\operatorname{Skew} = \frac{n}{(n-1)(n-2)}\sum_{i=1}^{n}\left(\frac{x_i-\bar{x}}{s}\right)^3",
-        r"\begin{aligned}\operatorname{Kurtosis} &= \frac{n(n+1)}{(n-1)(n-2)(n-3)}\sum_{i=1}^{n}\left(\frac{x_i-\bar{x}}{s}\right)^4 \\ &\quad - \frac{3(n-1)^2}{(n-2)(n-3)}\end{aligned}",
-    ]
     paragraphs = re.findall(r'<p>.*?</p>', terms, re.DOTALL)
     for start in range(0, len(paragraphs), 2):
         for index, column in zip(range(start, min(start + 2, len(paragraphs))), st.columns(2)):
             paragraph = paragraphs[index]
             with column:
-                parts = re.split(r'<span class="equation">.*?</span>', paragraph, flags=re.DOTALL)
-                if len(parts) == 2:
-                    st.html('<div class="report-definitions">' + parts[0] + '</p></div>')
-                    st.latex(equations[index])
-                else:
-                    st.html('<div class="report-definitions">' + paragraph + '</div>')
+                st.html('<div class="report-definitions">' + paragraph + '</div>')
     with st.expander("How to read the charts"):
         st.markdown("""
     - **Comparison bars:** heights show group means and medians. Counts give the size of each group; differences are descriptive associations.
