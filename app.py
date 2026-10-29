@@ -208,7 +208,7 @@ with st.expander("Variable and statistical definitions"):
     dictionary = re.sub(terms_pattern, '', definitions, flags=re.DOTALL)
     st.html('<div class="report-definitions">' + dictionary + '</div>')
     equations = [
-        r"n = \sum_{i=1}^{n} 1",
+        None,  # Records is defined in words; keep the following formula indices aligned.
         r"\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i",
         r"\operatorname{Median} = \begin{cases}x_{\left(\frac{n+1}{2}\right)}, & n\text{ odd} \\ \dfrac{x_{(n/2)} + x_{(n/2+1)}}{2}, & n\text{ even}\end{cases}",
         r"s = \sqrt{\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}}",
