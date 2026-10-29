@@ -203,7 +203,10 @@ with st.expander("Source, limitations and project files"):
         "",
         details,
     )
+    details = re.sub(r'<p><a href="https://github.com/.*?</p>', "", details, flags=re.DOTALL)
     st.html('<div class="report-definitions">' + details + "</div>")
+    st.link_button("Read the executed assignment notebook", "https://github.com/mmvej/healthcare-insurance-unit1/blob/main/notebooks/healthcare_insurance_analysis.ipynb")
+    st.link_button("GitHub repository and Python Streamlit source", "https://github.com/mmvej/healthcare-insurance-unit1")
     st.download_button(
         "Download the executed notebook",
         (ROOT / "notebooks/healthcare_insurance_analysis.ipynb").read_bytes(),
