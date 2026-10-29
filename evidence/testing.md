@@ -1,5 +1,17 @@
 # Testing and delivery record
 
+## Current assessment revision — 29 October 2026
+
+The current notebook contains 33 cells, including 14 code cells. A fresh kernel executed every cell in order using `scripts/execute_notebook.py`; all completed without saved error outputs. The notebook and HTML preview were regenerated together. `notebook_execution.txt` records this run. The opening cell was also checked from the notebooks directory and successfully loaded all 1,338 records; data paths now resolve from either documented launch folder.
+
+New executed evidence reconciles sex-by-smoking and children-group counts, means and medians with the dashboard's shared summary function. Both sets of group counts sum to 1,338. Checks confirm the sex-group mean reversal across smoking groups, the non-monotonic children-group means, and the two plotted BMI lines against NumPy least-squares calculations. Current chart explanations are saved in the notebook output. The new BMI figure was visually inspected for readable labels and lines.
+
+The existing automated suite passed: **16 passed** (`streamlit_parity_tests.txt`). Ruff passed for `src`, `app.py`, `tests` and `scripts` (`lint_results.txt`); notebook cells are not included in that lint command. The tests exercise all eight charts, filters, empty and tiny selections, themes, reset, independent CSV calculations and BMI trend handling.
+
+Live check on 29 October: the Streamlit URL displayed its sleeping-app screen. After waking, the deployment logs reported that cloning `mmvej/healthcare-insurance-unit1`, branch `main`, failed. GitHub metadata confirms that the repository exists, `main` exists and the connected user has push access, but its visibility is now private. This is consistent with a deployment source-access problem; the precise authentication cause is not established. Assessor access to the app and private repository is not confirmed. No repository visibility or sharing permissions were changed.
+
+These results validate the current local revision. Earlier entries below describe their named historical versions. The student's personal review and college submission are not established by these checks.
+
 ## Streamlit migration — 28 October 2026
 
 Public dashboard: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/

@@ -8,7 +8,7 @@ Repository URL: https://github.com/mmvej/healthcare-insurance-unit1
 
 Sites web dashboard: https://healthcare-insurance-unit1-mmvej.moseth.chatgpt.site (private to the owner by default). This browser-based edition uses the same cleaned records and descriptive calculations. Its source is in web_dashboard/.
 
-Deployed Streamlit dashboard: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/ (public). The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
+Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **29 October access check:** the app failed to download its source repository after waking; assessor access is not currently confirmed. GitHub reports the repository as private, so repository access must also be arranged for the assessor. The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
 
 ## Questions and findings
 
@@ -37,7 +37,17 @@ python -m pytest -q
 ruff check src app.py tests scripts
 ```
 
-The cleaned CSV is included. To regenerate it, run the notebook, which preserves the raw file, prepares the data, validates it, saves it and checks the reload. No API key is required. The notebook's kernel must use the environment where requirements were installed.
+The cleaned CSV is included. To regenerate it, run the notebook, which preserves the raw file, prepares the data, validates it, saves it and checks the reload. No API key is required. The notebook's kernel must use the environment where requirements were installed. Its opening cell resolves data paths from either the project root or the notebooks folder.
+
+## VS Code notebooks
+
+Open this project folder in VS Code. The workspace uses `.venv/bin/python`; the notebook kernel is **Healthcare Insurance (.venv)**. The Python and Jupyter extensions are required and listed in the workspace recommendations.
+
+If you recreate `.venv`, install `requirements.txt`, then register its kernel:
+
+```bash
+.venv/bin/python -m ipykernel install --prefix .venv --name healthcare-insurance --display-name "Healthcare Insurance (.venv)"
+```
 
 ## Files and evidence
 
@@ -76,7 +86,7 @@ CSV is sufficient for this static sample; a controlled database would be prefera
 | 4.1 | Source, dictionary, quality checks, lineage, storage and reload validation |
 | 4.2 | Handling justifications, permissions, privacy, security, ethics and standards |
 
-The public Streamlit URL above is the dashboard delivery link. Final college submission and personal review remain with the student.
+The Streamlit URL above is the intended dashboard delivery link; resolve the access issue recorded above before submission. Final college submission and personal review remain with the student.
 
 ## Sites web edition
 
