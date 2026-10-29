@@ -51,3 +51,8 @@ The user requested the remaining gaps be addressed after a concise revision of t
 The earlier draft and revisions above are retained. Full-sample checks compare group counts, means and medians with direct pandas calculations. The BMI coefficients and plotted lines are reconciled, while existing tests check filtered and tiny selections. No causal or forecast claim is added. USD and BMI kg/m² remain explicit display assumptions, not newly verified source facts.
 
 The revised notebook documents workflow lessons without inventing personal learning. The student's own review, ability to explain the code and any resulting decisions remain outstanding. The current validation results are recorded in `testing.md`.
+
+
+## Optional regression — 29 October 2026
+
+After discussing feasibility, the user requested the predictive extension (“do it”). Codex implemented a training-median baseline and ordinary least-squares regression with a BMI–smoking interaction motivated by the earlier analysis. A fixed grouped train/test split keeps identical rows together; preprocessing and fitting use training data only. No model search or test-set tuning was performed. The notebook records baseline/model and subgroup errors, a predicted-versus-actual plot and limitations. Independent error calculations and a test-target perturbation check validate the reported pipeline. The model is labelled exploratory because the full sample was previously examined; no clinical, causal, current-budget or individual-pricing claim is made. This remains AI-assisted work requiring the student's review.

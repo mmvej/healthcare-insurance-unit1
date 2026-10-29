@@ -7,7 +7,7 @@ This project explores recorded medical insurance charges in the Healthcare Insur
 Repository URL: https://github.com/mmvej/healthcare-insurance-unit1
 
 
-Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **Verified 29 October 2026:** the repository is public and the dashboard loads successfully after its restart. Live checks confirmed the default figures, smoking filter, empty-selection message and reset. The Python dashboard has eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
+Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **Verified 29 October 2026:** the repository is public and the dashboard loads successfully after its restart. Live checks confirmed the default figures, smoking filter, empty-selection message and reset. The Python dashboard has eight descriptive charts plus an optional regression report, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
 
 ## Questions and findings
 
@@ -16,6 +16,12 @@ The three questions compare charges by smoking status, examine age/BMI associati
 The downloaded file contains 1,338 rows and seven fields. Mean charges are 13,270.42 and median charges are 9,382.03. Mean charges are 32,050.23 for smoking=yes (274 records) and 8,434.27 for smoking=no (1,064 records). The notebook reports distributions, within-group correlations and regional comparisons, including group sizes.
 
 These are associations within the sample. The currency, observation period, sampling coverage and exact region boundaries are not confirmed by the retrieved source. The data cannot support current financial forecasts, treatment-effect claims or individual pricing decisions. Recorded charges are not assumed to be premiums.
+
+## Optional predictive regression
+
+The notebook and dashboard include a linear regression with a BMI–smoking interaction, using all six source predictors. A fixed grouped split retains 1,070 training rows and 268 test rows, keeping exact duplicates together. Encoding and fitting use training data only; the comparison predicts the training median. The test MAE is 2,723.40 versus 7,721.87 for the baseline (64.7% lower). MAE is measured in the original charge units, not as an accuracy percentage. Test MAE is 2,477.32 among non-smokers and 3,942.85 among smokers.
+
+This is exploratory held-out prediction within the supplied sample. The interaction was motivated by prior full-sample exploration; the single split is not independent external validation. It is not a current-cost forecast or an individual pricing tool. The dashboard report uses the fixed full-dataset split regardless of the descriptive filters. See `src/regression.py` for the reproducible method.
 
 ## Run the project
 

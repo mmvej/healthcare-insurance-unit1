@@ -9,3 +9,4 @@ nbconvert==7.17.2
 ipykernel==7.4.0
 pytest==9.1.1
 ruff==0.17.3
+scikit-learn==1.9.1

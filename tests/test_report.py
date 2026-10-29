@@ -39,7 +39,7 @@ def test_native_theme_and_report_content():
     app.run()
     assert not app.exception
     assert app.toggle[0].value is True
-    assert len(app.get('image')) == 8
+    assert len(app.get('image')) == 9
     text = ' '.join(m.value for m in app.markdown)
     assert 'direction reverses' in text
     assert 'smoking=no' not in text
@@ -59,7 +59,7 @@ def test_native_theme_and_report_content():
     next(button for button in app.button if button.label == 'Reset filters').click().run()
     assert not app.exception
     assert app.metric[0].value == '1,338'
-    assert len(app.get('image')) == 8
+    assert len(app.get('image')) == 9
     assert app.toggle[0].value is False
 
 

@@ -7,6 +7,7 @@ import pandas as pd
 import streamlit as st
 
 from src.analysis import AGE_LABELS, CLEAN, ROOT, filter_data, summary, validate
+from src.regression import interpretation, prediction_chart, regression_results
 from src.report import SMOKING, chart_style, explanations, report_chart
 
 TITLE = "Medical insurance charges (USD) by age, BMI, smoking status and region"
@@ -178,6 +179,19 @@ else:
         + "</div>"
     )
     st.write(notes["groups"])
+
+with st.expander("Optional predictive regression"):
+    st.write("Exploratory held-out prediction of recorded charges using age, sex, BMI, children, smoking and region, with a BMI–smoking interaction. This report always uses the full dataset and a fixed split; the descriptive filters above do not change it.")
+    train, test, scores, predictions, group_errors = regression_results(data)
+    st.write(f"Training: {len(train):,} records. Test: {len(test):,} records. About 20% of distinct records are held out (seed 42); identical source rows stay on one side of the split.")
+    st.dataframe(scores.round(2), hide_index=True)
+    figure = prediction_chart(predictions, dark=dark)
+    st.pyplot(figure, alt="Held-out predicted versus actual recorded charges")
+    plt.close(figure)
+    st.write(interpretation(scores, predictions))
+    st.dataframe(group_errors.rename(index={"no": "Non-smokers", "yes": "Smokers"}).round(2))
+    st.write("Encoding, model coefficients and the baseline median are fitted on training data only. No test-set tuning is used. The interaction was motivated by earlier full-sample exploration, so this is exploratory evaluation. A single split is uncertain; external data and training-only cross-validation would strengthen validation. Missing dates, diagnoses and sampling details mean these predictions cannot establish causes, forecast current costs or set individual premiums. Charge units remain unconfirmed.")
+
 
 # Reuse the authored definitions and conclusion so their wording stays aligned.
 source = (ROOT / "web_dashboard/index.html").read_text()
