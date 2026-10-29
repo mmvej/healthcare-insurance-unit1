@@ -59,7 +59,9 @@ h1 {{font-size:2rem!important}}
 .regional-table th:first-child,.regional-table td:first-child,.regional-table th:nth-child(2),.regional-table td:nth-child(2) {{text-align:left}}
 [data-testid="stExpander"] details,[data-testid="stExpander"] summary {{background-color:{surface}!important;color:{text}!important}}
 [data-testid="stExpander"] summary *,[data-testid="stExpander"] details[open] summary * {{color:{text}!important}}
-[data-testid="stExpander"] summary svg {{fill:currentColor}}
+[data-testid="stExpander"] summary {{padding:16px 20px!important}}
+[data-testid="stExpander"] summary p {{font-size:clamp(1.15rem,2.2vw,1.5rem)!important;font-weight:700!important;line-height:1.35!important;margin:0!important}}
+[data-testid="stExpander"] summary svg {{fill:currentColor;width:24px;height:24px;flex-shrink:0}}
 .report-definitions table {{width:100%;border-collapse:collapse;font-size:15px}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}}
