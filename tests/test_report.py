@@ -148,8 +148,12 @@ def test_boxplot_labels_follow_selected_records():
     for selected in [frame, frame.loc[frame.smoker.eq('yes')]]:
         figure = report_chart(selected, 'box')
         labels = [item.get_text() for item in figure.axes[0].texts]
-        assert {'Lower whisker', 'Q1 (25%)', 'Median', 'Q3 (75%)', 'Upper whisker'}.issubset(labels)
-        assert 'IQR\nMiddle 50%' in labels
+        for _, group in selected.groupby('smoker'):
+            q1, median, q3 = group.charges.quantile([0.25, 0.5, 0.75])
+            assert f'Q1: {q1:,.0f}' in labels
+            assert f'Median: {median:,.0f}' in labels
+            assert f'Q3: {q3:,.0f}' in labels
+            assert f'IQR: {q3 - q1:,.0f}' in labels
         plt.close(figure)
     figure = report_chart(frame.head(1), 'box')
     assert 'Q1 = median = Q3:' in figure.axes[0].texts[0].get_text()
