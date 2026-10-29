@@ -54,8 +54,12 @@ st.markdown(
 [data-baseweb="switch"]>div:first-child {{background:{border}}}
 [data-testid="stMainBlockContainer"] {{max-width:1240px;padding-top:3rem}}
 h1 {{font-size:2rem!important}}
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] p,
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] li {{font-size:18px;line-height:1.65}}
+[data-testid="stMain"] label p {{font-size:17px}}
+
 .regional-table {{overflow-x:auto;border:1px solid {border};border-radius:8px;background:{surface};color:{text}}}
-.regional-table table {{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}}
+.regional-table table {{width:100%;border-collapse:collapse;font-size:17px;font-variant-numeric:tabular-nums}}
 .regional-table th,.regional-table td {{padding:12px;border-bottom:1px solid {border};text-align:right;white-space:nowrap;background:{surface};color:{text}}}
 .regional-table th:first-child,.regional-table td:first-child,.regional-table th:nth-child(2),.regional-table td:nth-child(2) {{text-align:left}}
 [data-testid="stExpander"] details,[data-testid="stExpander"] summary {{background-color:{surface}!important;color:{text}!important}}
@@ -63,11 +67,11 @@ h1 {{font-size:2rem!important}}
 [data-testid="stExpander"] summary {{padding:16px 20px!important}}
 [data-testid="stExpander"] summary p {{font-size:clamp(1.15rem,2.2vw,1.5rem)!important;font-weight:700!important;line-height:1.35!important;margin:0!important}}
 [data-testid="stExpander"] summary svg {{fill:currentColor;width:24px;height:24px;flex-shrink:0}}
-.report-definitions table {{width:100%;border-collapse:collapse;font-size:15px}}
+.report-definitions table {{width:100%;border-collapse:collapse;font-size:17px}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}}
 .report-definitions .terms p {{min-width:0}}
-.report-definitions p {{font-size:15px;line-height:1.7;color:{text}}}
+.report-definitions p {{font-size:17px;line-height:1.7;color:{text}}}
 @media(max-width:760px){{.report-definitions .terms{{grid-template-columns:1fr}}.report-definitions .tablewrap{{overflow:auto}}}}
 </style>""",
     unsafe_allow_html=True,
