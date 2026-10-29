@@ -202,6 +202,10 @@ definitions = re.search(
     source,
     re.DOTALL,
 ).group()
+definitions = re.sub(
+    r'<h2 id="variables-title">.*?</h2>| aria-labelledby="variables-title"',
+    "", definitions, flags=re.DOTALL,
+)
 with st.expander("Variable and statistical definitions"):
     terms_pattern = r'<div aria-label="Summary measure definitions".*?</div>'
     terms = re.search(terms_pattern, definitions, re.DOTALL).group()
@@ -266,5 +270,9 @@ conclusion = re.search(
     source,
     re.DOTALL,
 ).group()
+conclusion = re.sub(
+    r'<h2 id="conclusion-title">.*?</h2>| aria-labelledby="conclusion-title"',
+    "", conclusion, flags=re.DOTALL,
+)
 with st.expander("Conclusion"):
     st.html('<div class="report-definitions">' + conclusion + "</div>")
