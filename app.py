@@ -186,15 +186,18 @@ with st.expander("Predictive regression"):
         "Linear regression + BMI/smoking interaction": "Regression estimate",
     }}).rename(columns={"Test MAE": "Average prediction error (charge units)"})
     st.dataframe(display_scores.round(2), hide_index=True)
+    comparison_note, _, plot_note = interpretation(scores, predictions).partition(". ")
+    st.write(comparison_note + ".")
+    st.write("The simple comparison uses the same typical charge—the training median—for every record. Smaller errors mean closer estimates.")
     figure = prediction_chart(predictions, dark=dark)
     st.pyplot(figure, alt="Held-out predicted versus actual recorded charges")
     plt.close(figure)
-    st.write(interpretation(scores, predictions))
+    st.write(plot_note)
     st.dataframe(group_errors.rename(
         index={"no": "Non-smokers", "yes": "Smokers"},
         columns={"records": "Records checked", "mae": "Average prediction error (charge units)"},
     ).rename_axis("Smoking group").round(2))
-    st.write("The simple comparison uses the same typical charge—the training median—for every record. Smaller errors mean closer estimates. These results describe this sample; they do not establish reliable current-cost forecasts or suitable prices for individuals.")
+    st.write("These results describe this sample; they do not establish reliable current-cost forecasts or suitable prices for individuals.")
 
 
 
