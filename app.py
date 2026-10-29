@@ -224,7 +224,6 @@ with st.expander("Variable and statistical definitions"):
                 if len(parts) == 2:
                     st.html('<div class="report-definitions">' + parts[0] + '</p></div>')
                     st.latex(equations[index])
-                    st.html('<div class="report-definitions"><p>' + parts[1] + '</div>')
                 else:
                     st.html('<div class="report-definitions">' + paragraph + '</div>')
     st.markdown("### How to read the charts")
