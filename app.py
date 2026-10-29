@@ -104,12 +104,12 @@ selected = filter_data(data, regions, smokers, bands)
 
 
 def visual(kind, title, explanation):
-    st.subheader(title)
-    figure = report_chart(selected, kind, dark=dark)
-    with plt.rc_context(chart_style(dark)):
-        st.pyplot(figure, alt=title)
-    plt.close(figure)
-    st.write(explanation)
+    with st.expander(title):
+        figure = report_chart(selected, kind, dark=dark)
+        with plt.rc_context(chart_style(dark)):
+            st.pyplot(figure, alt=title)
+        plt.close(figure)
+        st.write(explanation)
 
 
 if selected.empty:
@@ -137,17 +137,11 @@ else:
         "Smoking groups: mean and median charges (USD)",
         notes["smokingcomparison"],
     )
-    left, right = st.columns(2)
-    with left:
-        visual("hist", "Distribution of charges", notes["hist"])
-    with right:
-        visual("box", "Charges by smoking status (USD)", notes["box"])
+    visual("hist", "Distribution of charges", notes["hist"])
+    visual("box", "Charges by smoking status (USD)", notes["box"])
     visual("regionchart", "Regional comparison (USD)", notes["regionchart"])
-    left, right = st.columns(2)
-    with left:
-        visual("agechart", "Age and charges (USD)", notes["agechart"])
-    with right:
-        visual("bmichart", "BMI and charges (USD)", notes["bmichart"])
+    visual("agechart", "Age and charges (USD)", notes["agechart"])
+    visual("bmichart", "BMI and charges (USD)", notes["bmichart"])
     visual(
         "sexcomparison",
         "Sex and charges within smoking groups (USD)",
@@ -158,29 +152,29 @@ else:
         "Children and charges (USD)",
         notes["childrencomparison"],
     )
-    st.subheader("Within-region smoking groups")
-    table = summary(selected, ["region", "smoker"]).reset_index()
-    table["smoker"] = table.smoker.map(SMOKING)
-    table = table[["region", "smoker", "count", "mean", "median", "std"]].rename(
-        columns={
-            "region": "Region",
-            "smoker": "Smoking group",
-            "count": "Records",
-            "mean": "Mean ($)",
-            "median": "Median ($)",
-            "std": "SD ($)",
-        }
-    )
-    st.html(
-        '<div class="regional-table">'
-        + table.to_html(
-            index=False, border=0, na_rep="—",
-            formatters={column: lambda value: f"{value:,.2f}"
-                        for column in ["Mean ($)", "Median ($)", "SD ($)"]},
+    with st.expander("Within-region smoking groups"):
+        table = summary(selected, ["region", "smoker"]).reset_index()
+        table["smoker"] = table.smoker.map(SMOKING)
+        table = table[["region", "smoker", "count", "mean", "median", "std"]].rename(
+            columns={
+                "region": "Region",
+                "smoker": "Smoking group",
+                "count": "Records",
+                "mean": "Mean ($)",
+                "median": "Median ($)",
+                "std": "SD ($)",
+            }
         )
-        + "</div>"
-    )
-    st.write(notes["groups"])
+        st.html(
+            '<div class="regional-table">'
+            + table.to_html(
+                index=False, border=0, na_rep="—",
+                formatters={column: lambda value: f"{value:,.2f}"
+                            for column in ["Mean ($)", "Median ($)", "SD ($)"]},
+            )
+            + "</div>"
+        )
+        st.write(notes["groups"])
 
 with st.expander("Optional predictive regression"):
     st.write("Full-dataset prediction of recorded charges from six source fields and a BMI–smoking interaction. Descriptive filters do not change this fixed evaluation.")
@@ -230,16 +224,16 @@ with st.expander("Variable and statistical definitions"):
                     st.latex(equations[index])
                 else:
                     st.html('<div class="report-definitions">' + paragraph + '</div>')
-    st.markdown("### How to read the charts")
-    st.markdown("""
-- **Comparison bars:** heights show group means and medians. Counts give the size of each group; differences are descriptive associations.
-- **Histogram:** the 30 equal-width intervals show record counts, not spending totals. The dashed line marks the median.
-- **Box plots:** boxes contain the middle 50%, with a median line. Whiskers reach observed values within 1.5 × IQR of each box edge; points beyond them are retained extremes.
-- **Age/BMI scatter plots:** each point is a record. Colour and shape identify smoking groups; BMI dashed lines are separate least-squares fits. Correlation measures linear association, not causation.
-- **Prediction scatter:** the dashed diagonal marks perfect prediction. Above it means overprediction; below it means underprediction. MAE is the average absolute error in original charge units, not percentage accuracy.
-""")
-    st.markdown("### Regression method and limits")
-    st.write("The fixed seed-42 split keeps identical records together. Encoding, model fitting and the baseline median use training data only; no test-set tuning is used. The BMI–smoking interaction was motivated by prior full-sample exploration, so evaluation is exploratory. Linear regression is unconstrained and can produce negative estimates. A single split gives uncertain performance estimates; cross-validation and external data would strengthen validation. Missing dates, diagnoses and sampling details prevent current-cost forecasts or individual pricing decisions. Charge units remain unconfirmed.")
+    with st.expander("How to read the charts"):
+        st.markdown("""
+    - **Comparison bars:** heights show group means and medians. Counts give the size of each group; differences are descriptive associations.
+    - **Histogram:** the 30 equal-width intervals show record counts, not spending totals. The dashed line marks the median.
+    - **Box plots:** boxes contain the middle 50%, with a median line. Whiskers reach observed values within 1.5 × IQR of each box edge; points beyond them are retained extremes.
+    - **Age/BMI scatter plots:** each point is a record. Colour and shape identify smoking groups; BMI dashed lines are separate least-squares fits. Correlation measures linear association, not causation.
+    - **Prediction scatter:** the dashed diagonal marks perfect prediction. Above it means overprediction; below it means underprediction. MAE is the average absolute error in original charge units, not percentage accuracy.
+    """)
+    with st.expander("Regression method and limits"):
+        st.write("The fixed seed-42 split keeps identical records together. Encoding, model fitting and the baseline median use training data only; no test-set tuning is used. The BMI–smoking interaction was motivated by prior full-sample exploration, so evaluation is exploratory. Linear regression is unconstrained and can produce negative estimates. A single split gives uncertain performance estimates; cross-validation and external data would strengthen validation. Missing dates, diagnoses and sampling details prevent current-cost forecasts or individual pricing decisions. Charge units remain unconfirmed.")
 with st.expander("Source, limitations and project files"):
     details = re.search(r"<details>.*?</details>", source, re.DOTALL).group()
     details = re.sub(
