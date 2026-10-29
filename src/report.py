@@ -179,21 +179,21 @@ def distribution_shape(values):
     if len(values) < 3 or values.nunique() < 2:
         return "Too few records or no variation to assess distribution shape."
     skew = values.skew()
+    sign = 'Positive' if skew > 0 else 'Negative' if skew < 0 else 'Zero'
     shape = (
-        "Right-skewed, with a tail towards higher charges"
-        if skew > 0.5 else
-        "Left-skewed, with a tail towards lower charges"
-        if skew < -0.5 else
-        "Little overall asymmetry; this does not imply a bell-shaped distribution"
+        'a tail towards higher charges' if skew > 0.5 else
+        'a tail towards lower charges' if skew < -0.5 else
+        'little overall asymmetry'
     )
-    text = f"{shape} (skewness {skew:.2f}). "
+    text = f"{sign} skew ({skew:.2f}): {shape}. "
     if len(values) < 4:
         return text + "At least four records are needed for excess kurtosis."
     kurtosis = values.kurt()
-    tails = "greater" if kurtosis > 0 else "less" if kurtosis < 0 else "similar"
+    sign = 'Positive' if kurtosis > 0 else 'Negative' if kurtosis < 0 else 'Zero'
+    tails = 'greater' if kurtosis > 0 else 'less' if kurtosis < 0 else 'similar'
     return text + (
-        f"Excess kurtosis {kurtosis:.2f} indicates {tails} weight in extreme deviations "
-        "than the normal reference."
+        f"{sign} excess kurtosis ({kurtosis:.2f}): {tails} weight in extreme deviations "
+        "relative to the normal reference."
     )
 
 

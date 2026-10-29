@@ -3,7 +3,7 @@ Current full-sample chart explanations — 29 October 2026
 Brief analytical findings computed from the plotted data. General chart-reading guidance is in the dashboard definitions.
 
 box: Smokers have a higher median; smokers have a wider middle-50% spread. Upper outliers: 46 among non-smokers and 0 among smokers (relative to each group’s own whiskers).
-hist: Right-skewed, with a tail towards higher charges (skewness 1.52). Excess kurtosis 1.61 indicates greater weight in extreme deviations than the normal reference.
+hist: Positive skew (1.52): a tail towards higher charges. Positive excess kurtosis (1.61): greater weight in extreme deviations relative to the normal reference.
 smokingcomparison: Smokers have higher mean charges by 23,616 USD (smokers/non-smokers: 3.80 times). The median is also higher among smokers by 27,111 USD.
 regionchart: Mean charges span 2,388 USD across regions; Southeast has the highest mean and Southwest the lowest. Northeast has the highest median.
 agechart: Age has a positive overall linear association with charges (r = 0.30). Within-group correlations are 0.63 among non-smokers and 0.37 among smokers.

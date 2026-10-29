@@ -106,7 +106,7 @@ def test_distribution_shape_matches_independent_statistics():
     # Asymmetry must come from the third moment, not a mean/median shortcut.
     values = frame.charges.head(4).copy()
     values[:] = np.array([-10., 0., 0., 1.])
-    assert 'Left-skewed' in distribution_shape(values)
+    assert 'Negative skew' in distribution_shape(values)
 
 
 def test_distribution_notes_handle_constant_and_tiny_groups():
