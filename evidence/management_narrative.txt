@@ -1,16 +1,10 @@
 Current full-sample chart explanations — 29 October 2026
 
-AI-assisted text calculated by src/report.py from 1,338 records. Charge amounts use the stated USD display assumption. Skewness is adjusted sample skewness; kurtosis is adjusted Fisher excess kurtosis (normal reference zero). Explanations recalculate with filters and do not establish causation.
+Captions describe the selected data; detailed statistical definitions are in the dashboard expander.
 
 smokingcomparison: The smoking group has higher average costs, with a gap of $23,615.96. Smokers’ mean costs are 3.80 times those of non-smokers.
-box: The line inside each box is the median; the box runs from the 25th to the 75th percentile, so its height is the IQR (the middle 50% of charges). Whiskers reach the most extreme observed values within 1.5 × IQR of the box edges. Points beyond them are flagged extremes, not automatically errors, and are retained.
-
-Non-smokers: median $7,345.41; middle half $3,986.44–$11,362.89 (IQR $7,376.45). There are 46 points above and 0 below the whisker limits. Skewness is 1.54: positive, indicating asymmetry towards higher charges. Excess kurtosis is 3.15, indicating greater weight in extreme deviations than a normal-distribution reference. These measures do not establish normality or show how many peaks are present.
-
-Smokers: median $34,456.35; middle half $20,826.24–$41,019.21 (IQR $20,192.96). There are 0 points above and 0 below the whisker limits. Skewness is 0.13: close to zero, suggesting limited overall asymmetry. Excess kurtosis is -1.04, indicating less weight in extreme deviations than a normal-distribution reference. These measures do not establish normality or show how many peaks are present.
-
-Compare box position for differences in typical charges and box height for differences in spread. A box plot does not reveal separate peaks; use the histogram to inspect that shape. Neither the group difference nor its skewness proves causation.
-hist: Each bar counts records in one of 30 equal-width charge intervals; taller bars mean more records, not higher total spending. The most populated interval is $1,122–$3,210 (15.5% of the selection). The middle half of charges lies between $4,740.29 and $16,639.91; the observed range is $1,121.87–$63,770.43. The dashed line marks the median. Skewness is 1.52: positive, indicating asymmetry towards higher charges. Excess kurtosis is 1.61, indicating greater weight in extreme deviations than a normal-distribution reference. These measures do not establish normality or show how many peaks are present. The right tail extends towards unusually high charges. The median and IQR describe the centre and spread without being pulled as strongly by those extremes; the mean still matters for aggregate spending.
+box: Smokers have a higher median; smokers have a wider middle-50% spread. Upper outliers: 46 among non-smokers and 0 among smokers (relative to each group’s own whiskers).
+hist: Right-skewed, with a tail towards higher charges (skewness 1.52). Excess kurtosis 1.61 indicates greater weight in extreme deviations than the normal reference.
 regionchart: Southeast has the highest mean; northeast has the highest median. Different rankings show that the region with the largest average is not necessarily the one with the largest typical cost.
 agechart: Higher age tends to accompany higher costs (correlation 0.30). The correlation is 0.63 among non-smokers and 0.37 among smokers. Separating the groups reveals a pattern that the overall result can hide.
 bmichart: Higher BMI tends to accompany higher costs (correlation 0.20). The correlation is 0.08 among non-smokers and 0.81 among smokers. Separating the groups reveals a pattern that the overall result can hide.

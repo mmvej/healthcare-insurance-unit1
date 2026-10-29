@@ -99,14 +99,14 @@ def test_distribution_shape_matches_independent_statistics():
         assert f'{skew(values, bias=False):.2f}' in text
         assert f'{kurtosis(values, fisher=True, bias=False):.2f}' in text
     notes = explanations(frame)
-    assert '30 equal-width' in notes['hist']
     assert '1.52' in notes['hist'] and '1.61' in notes['hist']
-    assert '3.15' in notes['box'] and '-1.04' in notes['box']
-    assert '46 points above' in notes['box']
+    assert '46 among non-smokers and 0 among smokers' in notes['box']
+    assert 'Smokers have a higher median' in notes['box']
+    assert 'smokers have a wider' in notes['box']
     # Asymmetry must come from the third moment, not a mean/median shortcut.
     values = frame.charges.head(4).copy()
     values[:] = np.array([-10., 0., 0., 1.])
-    assert 'negative' in distribution_shape(values)
+    assert 'Left-skewed' in distribution_shape(values)
 
 
 def test_distribution_notes_handle_constant_and_tiny_groups():

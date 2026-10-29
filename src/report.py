@@ -175,93 +175,67 @@ def report_chart(frame, kind, dark=True):
 
 
 def distribution_shape(values):
-    """Describe sample-adjusted skewness and Fisher excess kurtosis safely."""
+    """Summarise selected asymmetry and tail weight in two short sentences."""
     if len(values) < 3 or values.nunique() < 2:
-        return "There are too few records or no variation to describe skewness and kurtosis reliably."
+        return "Too few records or no variation to assess distribution shape."
     skew = values.skew()
-    direction = (
-        "positive, indicating asymmetry towards higher charges"
+    shape = (
+        "Right-skewed, with a tail towards higher charges"
         if skew > 0.5 else
-        "negative, indicating asymmetry towards lower charges"
+        "Left-skewed, with a tail towards lower charges"
         if skew < -0.5 else
-        "close to zero, suggesting limited overall asymmetry"
+        "Little overall asymmetry; this does not imply a bell-shaped distribution"
     )
-    text = f"Skewness is {skew:.2f}: {direction}. "
+    text = f"{shape} (skewness {skew:.2f}). "
     if len(values) < 4:
         return text + "At least four records are needed for excess kurtosis."
     kurtosis = values.kurt()
-    tails = (
-        "greater weight in extreme deviations than a normal-distribution reference"
-        if kurtosis > 0 else
-        "less weight in extreme deviations than a normal-distribution reference"
-        if kurtosis < 0 else
-        "the same fourth-moment value as a normal-distribution reference"
+    tails = "greater" if kurtosis > 0 else "less" if kurtosis < 0 else "similar"
+    return text + (
+        f"Excess kurtosis {kurtosis:.2f} indicates {tails} weight in extreme deviations "
+        "than the normal reference."
     )
-    text += f"Excess kurtosis is {kurtosis:.2f}, indicating {tails}. "
-    text += "These measures do not establish normality or show how many peaks are present."
-    if len(values) < 20:
-        text += " This small selection makes both shape estimates especially unstable."
-    return text
 
 
 def histogram_description(values):
-    """Connect the actual 30-bin histogram to concentration, spread and tails."""
-    counts, edges = np.histogram(values, bins=30)
-    peak = int(counts.argmax())
-    q1, q3 = values.quantile([0.25, 0.75])
-    text = (
-        "Each bar counts records in one of 30 equal-width charge intervals; taller bars "
-        "mean more records, not higher total spending. "
-        f"The most populated interval is ${edges[peak]:,.0f}–${edges[peak + 1]:,.0f} "
-        f"({100 * counts[peak] / len(values):.1f}% of the selection). "
-        f"The middle half of charges lies between ${q1:,.2f} and ${q3:,.2f}; "
-        f"the observed range is ${values.min():,.2f}–${values.max():,.2f}. "
-        "The dashed line marks the median. "
-    )
-    text += distribution_shape(values)
-    if len(values) >= 3 and values.nunique() > 1:
-        if values.skew() > 0.5:
-            text += (
-                " The right tail extends towards unusually high charges. The median and IQR "
-                "describe the centre and spread without being pulled as strongly by those extremes; "
-                "the mean still matters for aggregate spending."
-            )
-        elif values.skew() < -0.5:
-            text += " The left tail extends towards unusually low charges; compare the median and IQR with the mean."
-        else:
-            text += " A near-zero skew does not make the distribution bell-shaped; separated clusters can also balance each other."
-    return text
+    """Keep the chart caption focused on observed shape."""
+    return distribution_shape(values)
 
 
 def box_description(frame):
-    """Explain quartiles, whiskers and retained extremes for actual selected groups."""
-    parts = [
-        ("The line inside each box is the median; the box runs from the 25th to the 75th "
-        "percentile, so its height is the IQR (the middle 50% of charges). Whiskers reach "
-        "the most extreme observed values within 1.5 × IQR of the box edges. Points beyond "
-        "them are flagged extremes, not automatically errors, and are retained.")
-    ]
+    """Summarise the displayed differences in centre, spread and outliers."""
+    groups = {}
     for group, label in [('no', 'Non-smokers'), ('yes', 'Smokers')]:
         values = frame.loc[frame.smoker.eq(group), 'charges']
         if values.empty:
             continue
         q1, q3 = values.quantile([0.25, 0.75])
         iqr = q3 - q1
-        below = int((values < q1 - 1.5 * iqr).sum())
         above = int((values > q3 + 1.5 * iqr).sum())
-        parts.append(
-            f"{label}: median ${values.median():,.2f}; middle half "
-            f"${q1:,.2f}–${q3:,.2f} (IQR ${iqr:,.2f}). "
-            f"There are {above} points above and {below} below the whisker limits. "
-            + distribution_shape(values)
+        below = int((values < q1 - 1.5 * iqr).sum())
+        groups[group] = (label, values.median(), iqr, above, below)
+    if len(groups) == 2:
+        no, yes = groups['no'], groups['yes']
+        centre = (
+            "Smokers have a higher median" if yes[1] > no[1] else
+            "Non-smokers have a higher median" if yes[1] < no[1] else
+            "Both groups have the same median"
         )
-    if frame.smoker.nunique() == 2:
-        parts.append(
-            "Compare box position for differences in typical charges and box height for "
-            "differences in spread. A box plot does not reveal separate peaks; use the "
-            "histogram to inspect that shape. Neither the group difference nor its skewness proves causation."
+        spread = (
+            "smokers have a wider middle-50% spread" if yes[2] > no[2] else
+            "non-smokers have a wider middle-50% spread" if yes[2] < no[2] else
+            "both groups have the same middle-50% spread"
         )
-    return '\n\n'.join(parts)
+        return (
+            f"{centre}; {spread}. "
+            f"Upper outliers: {no[3]} among non-smokers and {yes[3]} among smokers "
+            "(relative to each group’s own whiskers)."
+        )
+    label, _median, iqr, above, below = next(iter(groups.values()))
+    return (
+        f"{label}: the middle 50% spans {iqr:,.0f} USD (IQR). "
+        f"There are {above} upper and {below} lower outliers beyond the whiskers."
+    )
 
 
 def explanations(frame):

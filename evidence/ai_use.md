@@ -61,3 +61,6 @@ After discussing feasibility, the user requested the predictive extension (“do
 ## Distribution narrative revision — 29 October 2026
 
 The user requested replacing the generic histogram/box-plot descriptions with explicit skewness and kurtosis interpretation. The old mean-versus-median and higher-smoker-median prose was replaced with calculations from the current selection: bar intervals, concentration, quartiles, skewness, sample-adjusted Fisher excess kurtosis and box-plot fences. Definitions were checked against pandas documentation; tests independently compare the values with SciPy. No normality, peak-count or causal conclusion is inferred from a moment alone. The notebook and management_narrative.txt retain the revised full-sample text.
+
+
+The user then requested brief summaries of the analytical properties on display. Histogram and box-plot captions were shortened to two sentences each. Detailed methods remain in the definitions and notebook; figures still recalculate from the selected data.
