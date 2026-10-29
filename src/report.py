@@ -239,120 +239,127 @@ def box_description(frame):
 
 
 def explanations(frame):
-    """Interpret the selected data without duplicating chart labels and counts."""
-    out = {}
-    no, yes = (frame.loc[frame.smoker.eq(g)] for g in ["no", "yes"])
+    """Brief analytical findings calculated from the plotted selection."""
+    out = {'box': box_description(frame), 'hist': histogram_description(frame.charges)}
+    no, yes = (frame.loc[frame.smoker.eq(g)] for g in ['no', 'yes'])
     if len(no) and len(yes):
-        a, b = no.charges.mean(), yes.charges.mean()
-        group = "smoking" if b >= a else "non-smoking"
-        ratio = (
-            f"Smokers’ mean costs are {b / a:.2f} times those of non-smokers. "
-            if a
-            else ""
+        gap = yes.charges.mean() - no.charges.mean()
+        ratio = yes.charges.mean() / no.charges.mean() if no.charges.mean() else None
+        median_gap = yes.charges.median() - no.charges.median()
+        higher = 'Smokers' if gap > 0 else 'Non-smokers'
+        mean_text = (
+            f"{higher} have higher mean charges by {abs(gap):,.0f} USD"
+            if gap else 'Both smoking groups have the same mean charges'
         )
-        out["smokingcomparison"] = (
-            f"The {group} group has higher average costs, with a gap of ${abs(b - a):,.2f}. "
-            + ratio
+        if ratio is not None:
+            mean_text += f" (smokers/non-smokers: {ratio:.2f} times)"
+        median_higher = 'smokers' if median_gap > 0 else 'non-smokers'
+        out['smokingcomparison'] = mean_text + '. ' + (
+            f"The median is also higher among {median_higher} by {abs(median_gap):,.0f} USD."
+            if median_gap and gap * median_gap >= 0 else
+            f"The median comparison reverses: {median_higher} are higher by {abs(median_gap):,.0f} USD."
+            if median_gap else 'Both groups have the same median.'
         )
     else:
-        group = "smokers" if len(yes) else "non-smokers"
-        out["smokingcomparison"] = (
-            f"Only {group} are selected. Select both smoking groups "
-            "to compare their costs."
+        label = 'smokers' if len(yes) else 'non-smokers'
+        difference = frame.charges.mean() - frame.charges.median()
+        out['smokingcomparison'] = (
+            f"Only {label} are selected; their mean is {abs(difference):,.0f} USD "
+            f"{'above' if difference >= 0 else 'below'} their median. "
+            'A between-group comparison is unavailable.'
         )
-    out["box"] = box_description(frame)
-    out["hist"] = histogram_description(frame.charges)
-    regions = summary(frame, "region")
-    mean_region, median_region = regions["mean"].idxmax(), regions["median"].idxmax()
+
+    regions = summary(frame, 'region')
+    mean_region, median_region = regions['mean'].idxmax(), regions['median'].idxmax()
+    mean_gap = regions['mean'].max() - regions['mean'].min()
     if len(regions) > 1:
-        pattern = (
-            "Both measures rank the same region first."
-            if mean_region == median_region
-            else "Different rankings show that the region with the largest average "
-            "is not necessarily the one with the largest typical cost."
-        )
-        out["regionchart"] = (
-            f"{mean_region.title()} has the highest mean; {median_region} "
-            f"has the highest median. {pattern}"
+        out['regionchart'] = (
+            f"Mean charges span {mean_gap:,.0f} USD across regions; {mean_region.title()} "
+            f"has the highest mean and {regions['mean'].idxmin().title()} the lowest. "
+            f"{median_region.title()} has the highest median."
+            if mean_gap else 'All selected regions have equal mean charges. '
+            f"{median_region.title()} has the highest median."
         )
     else:
-        out["regionchart"] = (
-            f"Only {mean_region} is selected. Add other regions to make "
-            "a geographic comparison."
+        out['regionchart'] = (
+            f"Only {mean_region} is selected: its mean is "
+            f"{abs(frame.charges.mean() - frame.charges.median()):,.0f} USD "
+            f"{'above' if frame.charges.mean() >= frame.charges.median() else 'below'} its median."
         )
-    for key, chart_id in [("age", "agechart"), ("bmi", "bmichart")]:
+
+    for key, chart_id in [('age', 'agechart'), ('bmi', 'bmichart')]:
         r = correlation(frame, key)
-        label = "age" if key == "age" else "BMI"
+        label = 'Age' if key == 'age' else 'BMI'
         if r is None:
-            text = f"There is not enough variation or enough records to summarise the {label}–charge relationship."
-        elif abs(r) < 0.15:
-            text = f"{label.capitalize() if key == 'age' else label} shows little overall linear relationship with medical costs (correlation {r:.2f})."
-        else:
-            text = f"{'Higher' if r > 0 else 'Lower'} {label} tends to accompany higher costs (correlation {r:.2f})."
+            out[chart_id] = f"There is not enough variation or enough records to assess the {label}–charge association."
+            continue
+        direction = 'positive' if r > 0 else 'negative' if r < 0 else 'zero'
+        text = f"{label} has a {direction} overall linear association with charges (r = {r:.2f})."
         rn, ry = correlation(no, key), correlation(yes, key)
         if rn is not None and ry is not None:
-            text += f" The correlation is {rn:.2f} among non-smokers and {ry:.2f} among smokers. "
-            text += (
-                "Separating the groups reveals a pattern that the overall result can hide."
-                if abs(rn - ry) > 0.25
-                else "The markers show the pattern within each smoking group."
-            )
-        else:
-            text += " The spread shows that this variable alone does not explain individual costs."
+            text += f" Within-group correlations are {rn:.2f} among non-smokers and {ry:.2f} among smokers."
+        elif frame.smoker.nunique() == 2:
+            available = [('non-smokers', rn), ('smokers', ry)]
+            for group, value in available:
+                if value is not None:
+                    text += f" Among {group}, r = {value:.2f}; the other group has insufficient variation or records."
         out[chart_id] = text
-    comparisons = []
-    for group in ["no", "yes"]:
+
+    comparisons, clauses = [], []
+    for group in ['no', 'yes']:
         part = frame.loc[frame.smoker.eq(group)]
-        if {"female", "male"}.issubset(set(part.sex)):
-            means = part.groupby("sex").charges.mean()
-            comparisons.append((group, means["female"] - means["male"]))
-    sex_text = []
-    for group, delta in comparisons:
-        category = "smokers" if group == "yes" else "non-smokers"
-        higher, lower = ("female", "male") if delta > 0 else ("male", "female")
-        sex_text.append(
-            f"Among {category}, the {higher} group has higher average costs "
-            f"than the {lower} group."
-            if delta
-            else f"Among {category}, both sex groups have the same average costs."
-        )
-    if len(comparisons) == 2 and comparisons[0][1] * comparisons[1][1] < 0:
-        sex_text.append(
-            "The direction reverses between smoking groups, so one overall sex "
-            "comparison would hide an important difference."
-        )
-    elif comparisons:
-        sex_text.append(
-            "Comparing within smoking groups helps separate these patterns from "
-            "differences in smoking-group mix."
-        )
-    out["sexcomparison"] = (
-        " ".join(sex_text)
-        if sex_text
-        else (
-            "The selection does not contain both sex groups within a smoking group. Widen the filters to compare them."
-        )
-    )
-    children = summary(frame, "children").sort_index()
-    if len(children) > 1:
-        rising = children["mean"].is_monotonic_increasing
-        text = (
-            "Means increase across the selected categories, but this does not establish "
-            "that each additional child raises costs."
-            if rising
-            else "Average costs do not rise consistently with number of children, so there "
-            "is no simple “more children, higher costs” pattern."
-        )
-        if (children["count"] < 30).any():
-            text += " The smaller groups shown in the chart should be interpreted cautiously."
-        out["childrencomparison"] = text
+        if {'female', 'male'}.issubset(set(part.sex)):
+            means = part.groupby('sex').charges.mean()
+            delta = means['female'] - means['male']
+            comparisons.append(delta)
+            label = 'non-smokers' if group == 'no' else 'smokers'
+            higher = 'female' if delta > 0 else 'male'
+            clauses.append(
+                f"among {label}, the {higher} mean is {abs(delta):,.0f} USD higher"
+                if delta else f"among {label}, both sex groups have equal means"
+            )
+    if clauses:
+        text = '; '.join(clauses) + '.'
+        text = text[0].upper() + text[1:]
+        if len(comparisons) == 2 and comparisons[0] * comparisons[1] < 0:
+            text += ' The direction reverses between smoking groups.'
+        out['sexcomparison'] = text
     else:
-        out["childrencomparison"] = (
-            f"Only the {children.index[0]}-child category appears. "
-            "Widen the filters to compare numbers of children."
-        )
-    out["groups"] = (
-        "Compare regions within each smoking group to see whether the overall "
-        "regional pattern remains."
-    )
+        out['sexcomparison'] = 'No selected smoking subgroup contains both sex categories, so a within-group sex comparison is unavailable.'
+
+    children = summary(frame, 'children').sort_index()
+    if len(children) > 1:
+        peak = children['mean'].idxmax()
+        if children['mean'].nunique() == 1:
+            pattern = 'Mean charges are equal across the selected child-count categories'
+        elif children['mean'].is_monotonic_increasing:
+            pattern = 'Mean charges rise across the selected child-count categories'
+        elif children['mean'].is_monotonic_decreasing:
+            pattern = 'Mean charges fall across the selected child-count categories'
+        else:
+            pattern = 'Mean charges do not change monotonically with child count'
+        text = f"{pattern}; the highest mean is in the {peak}-child group ({children.loc[peak, 'mean']:,.0f} USD)."
+        smallest = children['count'].idxmin()
+        if children.loc[smallest, 'count'] < 30:
+            text += f" The {smallest}-child estimate is based on just {int(children.loc[smallest, 'count'])} records."
+        out['childrencomparison'] = text
+    else:
+        out['childrencomparison'] = f"Only the {children.index[0]}-child category is selected; its mean is {children['mean'].iloc[0]:,.0f} USD and median {children['median'].iloc[0]:,.0f} USD."
+
+    if len(no) and len(yes):
+        table = frame.groupby(['region', 'smoker']).charges.mean().unstack('smoker')
+        gaps = (table['yes'] - table['no']).dropna()
+        if len(gaps) > 1:
+            region = gaps.abs().idxmax()
+            higher = 'smokers' if gaps.loc[region] > 0 else 'non-smokers'
+            out['groups'] = f"The largest within-region mean gap is in {region}: {higher} are higher by {abs(gaps.loc[region]):,.0f} USD."
+        elif len(gaps) == 1:
+            region = gaps.index[0]
+            higher = 'Smokers' if gaps.iloc[0] >= 0 else 'Non-smokers'
+            out['groups'] = f"{higher} have higher mean charges by {abs(gaps.iloc[0]):,.0f} USD in {region}."
+        else:
+            out['groups'] = 'No selected region contains both smoking groups; within-region smoking differences cannot be compared.'
+    else:
+        label = 'smokers' if len(yes) else 'non-smokers'
+        out['groups'] = f"Among {label}, regional means span {mean_gap:,.0f} USD; {mean_region} has the highest mean."
     return out

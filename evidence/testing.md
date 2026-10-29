@@ -6,7 +6,7 @@ The current notebook contains 39 cells, including 16 code cells. A fresh kernel 
 
 New executed evidence reconciles sex-by-smoking and children-group counts, means and medians with the dashboard's shared summary function. Both sets of group counts sum to 1,338. Checks confirm the sex-group mean reversal across smoking groups, the non-monotonic children-group means, and the two plotted BMI lines against NumPy least-squares calculations. Current chart explanations are saved in the notebook output. The new BMI figure was visually inspected for readable labels and lines.
 
-The existing automated suite passed: **21 passed** (`streamlit_parity_tests.txt`). Ruff passed for `src`, `app.py`, `tests` and `scripts` (`lint_results.txt`); notebook cells are not included in that lint command. The tests exercise all eight charts, filters, empty and tiny selections, themes, reset, independent CSV calculations and BMI trend handling.
+The existing automated suite passed: **23 passed** (`streamlit_parity_tests.txt`). Ruff passed for `src`, `app.py`, `tests` and `scripts` (`lint_results.txt`); notebook cells are not included in that lint command. The tests exercise all eight charts, filters, empty and tiny selections, themes, reset, independent CSV calculations and BMI trend handling.
 
 ### Current live deployment status — verified 29 October 2026
 
@@ -14,7 +14,7 @@ The owner made the GitHub repository public and authorised a dashboard restart. 
 
 A subsequent browser check confirmed all eight chart sections and the default 1,338 records, mean 13,270.42 and median 9,382.03. Selecting smokers returned 274 records, mean 32,050.23 and median 34,456.35, with updated chart explanations. Clearing the region selection displayed the no-records message without results; reset restored all 1,338 records and the original summary figures. The Sources section now uses native Streamlit link buttons for the repository and executed notebook. Their deployed destinations were inspected; opening GitHub through those buttons was not independently confirmed in the browser environment.
 
-The latest local verification passed all 21 tests and Ruff. The local and remote revisions matched at e38ea76 during the assessment recheck. These checks establish working deployment and filter behaviour in the browser session used; a separate signed-out assessor session was not tested.
+The latest local verification passed all 23 tests and Ruff. The local and remote revisions matched at e38ea76 during the assessment recheck. These checks establish working deployment and filter behaviour in the browser session used; a separate signed-out assessor session was not tested.
 
 The student's personal review and college submission remain unverified.
 
@@ -35,3 +35,9 @@ Replaced the generic histogram and smoking box-plot narratives with selected-dat
 Two additional tests check the reported sample moments against independent SciPy calculations and cover tiny and constant groups. Fresh notebook execution saved the new group shape table and current explanations.
 
 Caption refinement: removed the lengthy chart-reading tutorial, repeated ranges/quartiles and repeated caveats from the two captions at the user’s request. Avoided dollar signs in the new captions to prevent Markdown interpreting pairs as equations. Fresh notebook execution, 21 tests and Ruff passed.
+
+## Chart-specific captions — 29 October 2026
+
+All eight descriptive plots, the within-region table and the prediction scatter now have brief findings computed from their displayed data. Captions cover smoking mean/median gaps, histogram skew/tail weight, box-plot centre/spread/outliers, regional mean range and rankings, overall/within-smoking correlations, sex gaps within smoking groups, child-count mean patterns and the largest within-region smoking gap. The fixed regression report compares test MAE with its baseline and compares error in the highest-charge quarter with the remaining test records. Descriptive filters do not affect this labelled fixed evaluation.
+
+Chart-reading and model-method explanations are consolidated in the variable/statistical definitions expander. Added tests independently reconcile filtered gaps, child-group rankings, correlations and prediction-error groups; a changed-data case confirms that the smoking comparison reverses when its data reverses. All 23 tests pass, fresh notebook execution succeeds, and full-sample narratives are retained in management_narrative.txt.

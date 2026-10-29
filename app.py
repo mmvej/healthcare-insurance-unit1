@@ -183,16 +183,16 @@ else:
     st.write(notes["groups"])
 
 with st.expander("Optional predictive regression"):
-    st.write("Exploratory held-out prediction of recorded charges using age, sex, BMI, children, smoking and region, with a BMI–smoking interaction. This report always uses the full dataset and a fixed split; the descriptive filters above do not change it.")
+    st.write("Full-dataset prediction of recorded charges from six source fields and a BMI–smoking interaction. Descriptive filters do not change this fixed evaluation.")
     train, test, scores, predictions, group_errors = regression_results(data)
-    st.write(f"Training: {len(train):,} records. Test: {len(test):,} records. About 20% of distinct records are held out (seed 42); identical source rows stay on one side of the split.")
+    st.write(f"Training: {len(train):,} records. Test: {len(test):,} records.")
     st.dataframe(scores.round(2), hide_index=True)
     figure = prediction_chart(predictions, dark=dark)
     st.pyplot(figure, alt="Held-out predicted versus actual recorded charges")
     plt.close(figure)
     st.write(interpretation(scores, predictions))
     st.dataframe(group_errors.rename(index={"no": "Non-smokers", "yes": "Smokers"}).round(2))
-    st.write("Encoding, model coefficients and the baseline median are fitted on training data only. No test-set tuning is used. The interaction was motivated by earlier full-sample exploration, so this is exploratory evaluation. A single split is uncertain; external data and training-only cross-validation would strengthen validation. Missing dates, diagnoses and sampling details mean these predictions cannot establish causes, forecast current costs or set individual premiums. Charge units remain unconfirmed.")
+
 
 
 # Reuse the authored definitions and conclusion so their wording stays aligned.
@@ -227,12 +227,22 @@ with st.expander("Variable and statistical definitions"):
                     st.html('<div class="report-definitions"><p>' + parts[1] + '</div>')
                 else:
                     st.html('<div class="report-definitions">' + paragraph + '</div>')
+    st.markdown("### How to read the charts")
+    st.markdown("""
+- **Comparison bars:** heights show group means and medians. Counts give the size of each group; differences are descriptive associations.
+- **Histogram:** the 30 equal-width intervals show record counts, not spending totals. The dashed line marks the median.
+- **Box plots:** boxes contain the middle 50%, with a median line. Whiskers reach observed values within 1.5 × IQR of each box edge; points beyond them are retained extremes.
+- **Age/BMI scatter plots:** each point is a record. Colour and shape identify smoking groups; BMI dashed lines are separate least-squares fits. Correlation measures linear association, not causation.
+- **Prediction scatter:** the dashed diagonal marks perfect prediction. Above it means overprediction; below it means underprediction. MAE is the average absolute error in original charge units, not percentage accuracy.
+""")
+    st.markdown("### Regression method and limits")
+    st.write("The fixed seed-42 split keeps identical records together. Encoding, model fitting and the baseline median use training data only; no test-set tuning is used. The BMI–smoking interaction was motivated by prior full-sample exploration, so evaluation is exploratory. Linear regression is unconstrained and can produce negative estimates. A single split gives uncertain performance estimates; cross-validation and external data would strengthen validation. Missing dates, diagnoses and sampling details prevent current-cost forecasts or individual pricing decisions. Charge units remain unconfirmed.")
 with st.expander("Source, limitations and project files"):
     details = re.search(r"<details>.*?</details>", source, re.DOTALL).group()
     details = re.sub(
         r"</?details>|<summary>.*?</summary>", "", details, flags=re.DOTALL
     )
-    details = re.sub(r"<p>This Sites edition.*?</p>", "", details, flags=re.DOTALL)
+    details = re.sub(r"<p>This Sites edition.*?</p>|<p>Chart guide:.*?</p>", "", details, flags=re.DOTALL)
     details = details.replace(
         'href="notebook.html"',
         'href="https://github.com/mmvej/healthcare-insurance-unit1/blob/main/notebooks/healthcare_insurance_analysis.ipynb"',

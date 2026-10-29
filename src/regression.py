@@ -93,15 +93,14 @@ def prediction_chart(predictions, dark=False):
 
 
 def interpretation(scores, predictions):
+    """Describe the actual held-out errors shown by the prediction scatter."""
     baseline, model = scores['Test MAE']
     change = 100 * (baseline - model) / baseline if baseline else 0
+    high = predictions.actual >= predictions.actual.quantile(0.75)
+    errors = abs(predictions.actual - predictions.predicted)
+    change_text = f"{abs(change):.1f}% {'lower' if change >= 0 else 'higher'} error"
     return (
-        f'Test MAE is {model:,.2f}, compared with {baseline:,.2f} for the '
-        f'training-median baseline ({change:.1f}% lower error). MAE is the average '
-        'absolute prediction error in the original charge units; it is not a percentage '
-        'error or an accuracy score. '
-        f'{int((predictions.predicted < 0).sum())} test predictions are negative; '
-        'unconstrained linear regression can produce impossible amounts. '
-        'No clipping was applied. The plot and smoking-group errors show where '
-        'an overall average error can conceal poor predictions.'
+        f"Test MAE is {model:,.2f} versus {baseline:,.2f} for the baseline ({change_text}). "
+        f"For the highest-charge quarter, MAE is {errors[high].mean():,.0f}, compared "
+        f"with {errors[~high].mean():,.0f} for the remaining records."
     )

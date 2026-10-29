@@ -42,3 +42,16 @@ def test_mae_baseline_and_group_errors_reconcile():
     assert groups.records.sum() == len(test)
     np.testing.assert_allclose(np.average(groups.mae, weights=groups.records), model_error)
     assert np.isfinite(predictions.predicted).all()
+
+
+def test_prediction_caption_uses_observed_test_error_groups():
+    from src.regression import interpretation
+
+    _, data, _ = prepare_data()
+    _, _, scores, predictions, _ = regression_results(data)
+    high = predictions.actual >= predictions.actual.quantile(0.75)
+    errors = abs(predictions.actual - predictions.predicted)
+    text = interpretation(scores, predictions)
+    assert f'{errors[high].mean():,.0f}' in text
+    assert f'{errors[~high].mean():,.0f}' in text
+    assert len(text.split()) < 60

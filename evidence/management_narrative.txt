@@ -1,13 +1,13 @@
 Current full-sample chart explanations — 29 October 2026
 
-Captions describe the selected data; detailed statistical definitions are in the dashboard expander.
+Brief analytical findings computed from the plotted data. General chart-reading guidance is in the dashboard definitions.
 
-smokingcomparison: The smoking group has higher average costs, with a gap of $23,615.96. Smokers’ mean costs are 3.80 times those of non-smokers.
 box: Smokers have a higher median; smokers have a wider middle-50% spread. Upper outliers: 46 among non-smokers and 0 among smokers (relative to each group’s own whiskers).
 hist: Right-skewed, with a tail towards higher charges (skewness 1.52). Excess kurtosis 1.61 indicates greater weight in extreme deviations than the normal reference.
-regionchart: Southeast has the highest mean; northeast has the highest median. Different rankings show that the region with the largest average is not necessarily the one with the largest typical cost.
-agechart: Higher age tends to accompany higher costs (correlation 0.30). The correlation is 0.63 among non-smokers and 0.37 among smokers. Separating the groups reveals a pattern that the overall result can hide.
-bmichart: Higher BMI tends to accompany higher costs (correlation 0.20). The correlation is 0.08 among non-smokers and 0.81 among smokers. Separating the groups reveals a pattern that the overall result can hide.
-sexcomparison: Among non-smokers, the female group has higher average costs than the male group. Among smokers, the male group has higher average costs than the female group. The direction reverses between smoking groups, so one overall sex comparison would hide an important difference.
-childrencomparison: Average costs do not rise consistently with number of children, so there is no simple “more children, higher costs” pattern. The smaller groups shown in the chart should be interpreted cautiously.
-groups: Compare regions within each smoking group to see whether the overall regional pattern remains.
+smokingcomparison: Smokers have higher mean charges by 23,616 USD (smokers/non-smokers: 3.80 times). The median is also higher among smokers by 27,111 USD.
+regionchart: Mean charges span 2,388 USD across regions; Southeast has the highest mean and Southwest the lowest. Northeast has the highest median.
+agechart: Age has a positive overall linear association with charges (r = 0.30). Within-group correlations are 0.63 among non-smokers and 0.37 among smokers.
+bmichart: BMI has a positive overall linear association with charges (r = 0.20). Within-group correlations are 0.08 among non-smokers and 0.81 among smokers.
+sexcomparison: Among non-smokers, the female mean is 675 USD higher; among smokers, the male mean is 2,363 USD higher. The direction reverses between smoking groups.
+childrencomparison: Mean charges do not change monotonically with child count; the highest mean is in the 3-child group (15,355 USD). The 5-child estimate is based on just 18 records.
+groups: The largest within-region mean gap is in southeast: smokers are higher by 26,813 USD.

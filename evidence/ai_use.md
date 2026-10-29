@@ -64,3 +64,6 @@ The user requested replacing the generic histogram/box-plot descriptions with ex
 
 
 The user then requested brief summaries of the analytical properties on display. Histogram and box-plot captions were shortened to two sentences each. Detailed methods remain in the definitions and notebook; figures still recalculate from the selected data.
+
+
+The user requested chart-specific analytical captions throughout. Codex replaced remaining generic guidance with selected-data gaps, rankings, correlations and subgroup patterns, and shortened the fixed regression caption to its actual error results. General chart-reading and model-method text was moved into the definitions section. Filtered-data and reversal tests validate the new wording; the notebook saves the current full-sample descriptions.

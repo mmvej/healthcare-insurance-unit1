@@ -117,3 +117,26 @@ def test_distribution_notes_handle_constant_and_tiny_groups():
     for values in [pd.Series([5.]), pd.Series([5., 5., 5., 5.])]:
         assert 'no variation' in distribution_shape(values)
     assert 'At least four' in distribution_shape(pd.Series([1., 2., 6.]))
+
+
+def test_captions_follow_filtered_chart_values():
+    import numpy as np
+
+    _, frame, _ = prepare_data()
+    selected = frame.loc[frame.region.eq('southeast')]
+    notes = explanations(selected)
+    smoking_means = selected.groupby('smoker').charges.mean()
+    gap = abs(smoking_means['yes'] - smoking_means['no'])
+    assert f'{gap:,.0f} USD' in notes['smokingcomparison']
+    assert f'{gap:,.0f} USD' in notes['groups']
+    child_means = selected.groupby('children').charges.mean()
+    assert f'{child_means.idxmax()}-child group' in notes['childrencomparison']
+    assert f'{child_means.max():,.0f} USD' in notes['childrencomparison']
+    assert f'{selected.age.corr(selected.charges):.2f}' in notes['agechart']
+    # Reversal must be described using this selection, not the full-sample ordering.
+    changed = selected.copy()
+    changed.loc[changed.smoker.eq('no'), 'charges'] += 100000
+    changed_notes = explanations(changed)
+    assert 'Non-smokers have higher mean' in changed_notes['smokingcomparison']
+    assert np.isfinite(gap)
+    assert all(len(text.split()) < 70 for text in notes.values())
