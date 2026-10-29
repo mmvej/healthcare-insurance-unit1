@@ -8,7 +8,7 @@ Repository URL: https://github.com/mmvej/healthcare-insurance-unit1
 
 Sites web dashboard: https://healthcare-insurance-unit1-mmvej.moseth.chatgpt.site (private to the owner by default). This browser-based edition uses the same cleaned records and descriptive calculations. Its source is in web_dashboard/.
 
-Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **29 October access check:** GitHub now confirms the repository is public after the owner changed its visibility. A fresh dashboard visit still displays “Error running app”, so dashboard access remains unresolved. The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
+Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **Verified 29 October 2026:** the repository is public and the dashboard loads successfully after its restart. Live checks confirmed the default figures, smoking filter, empty-selection message and reset. The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
 
 ## Questions and findings
 
@@ -75,7 +75,7 @@ CSV is sufficient for this static sample; a controlled database would be prefera
 
 | Criteria | Evidence in notebook |
 | --- | --- |
-| 1.1 | Four healthcare applications, realistic decisions, extra data and limitations |
+| 1.1 | Three healthcare applications, realistic decisions, extra data and limitations |
 | 1.2 | Planning challenge, audience, three questions and realistic AI opportunity |
 | 2.1 | Inspection, .loc selection, filtering, groupby, aggregation, NumPy and charts |
 | 2.2 | Actual argument correction, documented improvements, validation and Git history |
@@ -86,7 +86,7 @@ CSV is sufficient for this static sample; a controlled database would be prefera
 | 4.1 | Source, dictionary, quality checks, lineage, storage and reload validation |
 | 4.2 | Handling justifications, permissions, privacy, security, ethics and standards |
 
-The Streamlit URL above is the intended dashboard delivery link; resolve the access issue recorded above before submission. Final college submission and personal review remain with the student.
+The Streamlit URL above is the working dashboard delivery link. Final college submission and personal review remain with the student.
 
 ## Sites web edition
 

@@ -8,11 +8,15 @@ New executed evidence reconciles sex-by-smoking and children-group counts, means
 
 The existing automated suite passed: **16 passed** (`streamlit_parity_tests.txt`). Ruff passed for `src`, `app.py`, `tests` and `scripts` (`lint_results.txt`); notebook cells are not included in that lint command. The tests exercise all eight charts, filters, empty and tiny selections, themes, reset, independent CSV calculations and BMI trend handling.
 
-Live check on 29 October: the Streamlit URL displayed its sleeping-app screen. After waking, the deployment logs reported that cloning `mmvej/healthcare-insurance-unit1`, branch `main`, failed. GitHub metadata confirms that the repository exists, `main` exists and the connected user has push access, but its visibility is now private. This is consistent with a deployment source-access problem; the precise authentication cause is not established. Assessor access to the app and private repository is not confirmed. No repository visibility or sharing permissions were changed.
+### Current live deployment status — verified 29 October 2026
 
-Follow-up on 29 October: the owner made the repository public; GitHub metadata confirms `visibility: public`. A fresh browser visit still displays “Error running app”. No further reboot was attempted: the earlier reboot confirmation was blocked by automatic approval review because interruption had not been specifically authorised. Dashboard recovery is still unverified.
+The owner made the GitHub repository public and authorised a dashboard restart. Streamlit then cloned the repository, installed its dependencies and started successfully. The earlier source-download failure is resolved.
 
-These results validate the current local revision. Earlier entries below describe their named historical versions. The student's personal review and college submission are not established by these checks.
+A subsequent browser check confirmed all eight chart sections and the default 1,338 records, mean 13,270.42 and median 9,382.03. Selecting smokers returned 274 records, mean 32,050.23 and median 34,456.35, with updated chart explanations. Clearing the region selection displayed the no-records message without results; reset restored all 1,338 records and the original summary figures. The Sources section now uses native Streamlit link buttons for the repository and executed notebook. Their deployed destinations were inspected; opening GitHub through those buttons was not independently confirmed in the browser environment.
+
+The latest local verification passed all 16 tests and Ruff. The local and remote revisions matched at e38ea76 during the assessment recheck. These checks establish working deployment and filter behaviour in the browser session used; a separate signed-out assessor session was not tested.
+
+Earlier entries below describe historical versions and are not current deployment blockers. The student's personal review and college submission remain unverified.
 
 ## Streamlit migration — 28 October 2026
 
