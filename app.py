@@ -64,7 +64,7 @@ h1 {{font-size:2rem!important}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}}
 .report-definitions .terms p {{min-width:0}}
-.report-definitions .equation {{display:block;overflow-x:auto;padding:10px 0;font-size:16px;line-height:1.8}}
+[data-testid="stLatex"] {{overflow-x:auto;padding:8px 0}}
 .report-definitions p {{font-size:15px;line-height:1.7;color:{text}}}
 @media(max-width:760px){{.report-definitions .terms{{grid-template-columns:1fr}}.report-definitions .tablewrap{{overflow:auto}}}}
 </style>""",
@@ -203,7 +203,30 @@ definitions = re.search(
     re.DOTALL,
 ).group()
 with st.expander("Variable and statistical definitions"):
-    st.html('<div class="report-definitions">' + definitions + "</div>")
+    terms_pattern = r'<div aria-label="Summary measure definitions".*?</div>'
+    terms = re.search(terms_pattern, definitions, re.DOTALL).group()
+    dictionary = re.sub(terms_pattern, '', definitions, flags=re.DOTALL)
+    st.html('<div class="report-definitions">' + dictionary + '</div>')
+    equations = [
+        r"n = \sum_{i=1}^{n} 1",
+        r"\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i",
+        r"\operatorname{Median} = \begin{cases}x_{\left(\frac{n+1}{2}\right)}, & n\text{ odd} \\ \dfrac{x_{(n/2)} + x_{(n/2+1)}}{2}, & n\text{ even}\end{cases}",
+        r"s = \sqrt{\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}}",
+        r"\begin{aligned} Q_1 &= Q(0.25),\quad Q_3 = Q(0.75) \\ \mathrm{IQR} &= Q_3-Q_1\end{aligned}",
+        r"r = \frac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2\,\sum_{i=1}^{n}(y_i-\bar{y})^2}}",
+    ]
+    paragraphs = re.findall(r'<p>.*?</p>', terms, re.DOTALL)
+    for start in range(0, len(paragraphs), 2):
+        for index, column in zip(range(start, min(start + 2, len(paragraphs))), st.columns(2)):
+            paragraph = paragraphs[index]
+            with column:
+                parts = re.split(r'<span class="equation">.*?</span>', paragraph, flags=re.DOTALL)
+                if len(parts) == 2:
+                    st.html('<div class="report-definitions">' + parts[0] + '</p></div>')
+                    st.latex(equations[index])
+                    st.html('<div class="report-definitions"><p>' + parts[1] + '</div>')
+                else:
+                    st.html('<div class="report-definitions">' + paragraph + '</div>')
 with st.expander("Source, limitations and project files"):
     details = re.search(r"<details>.*?</details>", source, re.DOTALL).group()
     details = re.sub(
