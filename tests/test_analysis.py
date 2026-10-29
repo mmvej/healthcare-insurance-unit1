@@ -97,7 +97,8 @@ def test_dashboard_default_and_filtered():
     app = AppTest.from_file(str(ROOT / "app.py"), default_timeout=60).run()
     assert not app.exception
     assert app.metric[0].value == "1,338"
-    assert len(app.get("image")) == 9
+    assert len(app.get("image")) == 8
+    assert len(app.get("plotly_chart")) == 1
     app.multiselect[0].set_value(["southeast"])
     app.multiselect[1].set_value(["yes"])
     app.run()

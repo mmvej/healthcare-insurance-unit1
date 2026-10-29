@@ -7,6 +7,7 @@ import pandas as pd
 import streamlit as st
 
 from src.analysis import AGE_LABELS, CLEAN, ROOT, filter_data, summary, validate
+from src.boxplot import interactive_boxplot
 from src.regression import interpretation, prediction_chart, regression_results
 from src.report import SMOKING, chart_style, explanations, report_chart
 
@@ -106,6 +107,17 @@ selected = filter_data(data, regions, smokers, bands)
 
 def visual(kind, title, explanation):
     with st.expander(title):
+        if kind == "box":
+            figure, table = interactive_boxplot(selected, dark=dark)
+            st.plotly_chart(figure, width="stretch", theme=None,
+                            config={"displayModeBar": False}, key="smoking_boxplot")
+            st.write(explanation)
+            numeric_columns = ['Lower whisker', 'Q1', 'Median', 'Q3', 'Upper whisker', 'IQR']
+            st.dataframe(
+                table.style.format({column: '{:,.2f}' for column in numeric_columns}),
+                hide_index=True, width="stretch",
+            )
+            return
         figure = report_chart(selected, kind, dark=dark)
         with plt.rc_context(chart_style(dark)):
             st.pyplot(figure, alt=title)
@@ -227,7 +239,7 @@ with st.expander("Variable and statistical definitions"):
         st.markdown("""
     - **Comparison bars:** heights show group means and medians. Counts give the size of each group; differences are descriptive associations.
     - **Histogram:** the 30 equal-width intervals show record counts, not spending totals. The dashed line marks the median.
-    - **Box plots:** boxes contain the middle 50%, with a median line. Whiskers reach observed values within 1.5 × IQR of each box edge; points beyond them are retained extremes.
+    - **Box plots:** boxes contain the middle 50%, with a median line. Whiskers reach observed values within 1.5 × IQR of each box edge; points beyond them are retained extremes. Hover over a box or key point for exact values; hover over an outlier for its charge. The table below the chart provides the same summary without hovering.
     - **Age/BMI scatter plots:** each point is a record. Colour and shape identify smoking groups; BMI dashed lines are separate least-squares fits. Correlation measures linear association, not causation.
     - **Prediction scatter:** the dashed diagonal marks perfect prediction. Above it means overprediction; below it means underprediction. MAE is the average absolute error in original charge units, not percentage accuracy.
     """)

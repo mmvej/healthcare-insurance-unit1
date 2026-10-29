@@ -44,6 +44,8 @@ Chart-reading and model-method explanations are consolidated in the variable/sta
 
 The regression section is now titled “Predictive regression”. Its introduction explains learning from one set of records and checking against separate records. Table headings use “Average prediction error” and “Simple median estimate”; calculations and evaluation scope are unchanged.
 
-## Box-plot labels — 29 October 2026
+## Interactive box plot — 29 October 2026
 
-At the user's correction, the histogram was restored to its previous unannotated form with its median line. Labels are now inside the smoking box plot for Q1, median, Q3, lower/upper whiskers, the middle-50% IQR bracket and any outliers. Numeric labels are shown for both groups: Q1, median, Q3, actual lower/upper whisker endpoints and IQR. Outlier labels give the count and observed value range. The single-value case uses one combined quartile/median label. Visual checks covered the full dataset in dark mode and a single-record selection in light mode. The updated test checks filtered box-plot labels, the single-record fallback and absence of histogram annotations.
+Replaced the crowded numeric annotations with an interactive Plotly box plot. Only median values stay visible. Hovering over a box or key point shows exact quartiles, median, observed whisker endpoints, IQR and outlier count; individual outlier points show their recorded charge. A two-row summary table provides these group values without hovering. The histogram is unchanged. The notebook's static box plot retains its uncluttered Matplotlib rendering.
+
+All 24 tests pass. Independent NumPy quartile checks and observed-fence checks reconcile the table with the full sample, smokers-only selection and a single record. Streamlit checks confirm eight static images and one interactive chart, with filter, reset, empty-selection and theme coverage. Ruff and dependency checks pass. A local browser check confirmed readable median lines, exact hover details and the formatted summary table; `boxplot_annotated.png` now records this clean layout. Live deployment verification is recorded separately below.

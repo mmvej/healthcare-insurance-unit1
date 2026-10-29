@@ -39,7 +39,8 @@ def test_native_theme_and_report_content():
     app.run()
     assert not app.exception
     assert app.toggle[0].value is True
-    assert len(app.get('image')) == 9
+    assert len(app.get('image')) == 8
+    assert len(app.get("plotly_chart")) == 1
     text = ' '.join(m.value for m in app.markdown)
     assert 'direction reverses' in text
     assert 'smoking=no' not in text
@@ -59,7 +60,8 @@ def test_native_theme_and_report_content():
     next(button for button in app.button if button.label == 'Reset filters').click().run()
     assert not app.exception
     assert app.metric[0].value == '1,338'
-    assert len(app.get('image')) == 9
+    assert len(app.get('image')) == 8
+    assert len(app.get("plotly_chart")) == 1
     assert app.toggle[0].value is False
 
 
@@ -143,21 +145,23 @@ def test_captions_follow_filtered_chart_values():
     assert all(len(text.split()) < 70 for text in notes.values())
 
 
-def test_boxplot_labels_follow_selected_records():
+def test_interactive_boxplot_matches_selected_summary():
+    import numpy as np
+
+    from src.boxplot import interactive_boxplot
+
     _, frame, _ = prepare_data()
-    for selected in [frame, frame.loc[frame.smoker.eq('yes')]]:
-        figure = report_chart(selected, 'box')
-        labels = [item.get_text() for item in figure.axes[0].texts]
-        for _, group in selected.groupby('smoker'):
-            q1, median, q3 = group.charges.quantile([0.25, 0.5, 0.75])
-            assert f'Q1: {q1:,.0f}' in labels
-            assert f'Median: {median:,.0f}' in labels
-            assert f'Q3: {q3:,.0f}' in labels
-            assert f'IQR: {q3 - q1:,.0f}' in labels
-        plt.close(figure)
-    figure = report_chart(frame.head(1), 'box')
-    assert 'Q1 = median = Q3:' in figure.axes[0].texts[0].get_text()
-    plt.close(figure)
-    figure = report_chart(frame, 'hist')
-    assert not figure.axes[0].texts
-    plt.close(figure)
+    for selected in [frame, frame.loc[frame.smoker.eq('yes')], frame.head(1)]:
+        figure, table = interactive_boxplot(selected)
+        assert len(figure.layout.annotations) == selected.smoker.nunique()
+        for _, row in table.iterrows():
+            group = 'no' if row['Smoking group'] == 'Non-smokers' else 'yes'
+            values = selected.loc[selected.smoker.eq(group), 'charges']
+            np.testing.assert_allclose(row[['Q1', 'Median', 'Q3']].to_numpy(dtype=float),
+                                       np.percentile(values, [25, 50, 75]))
+            inside = values.between(row['Q1'] - 1.5 * row['IQR'], row['Q3'] + 1.5 * row['IQR'])
+            assert row['Lower whisker'] == values[inside].min()
+            assert row['Upper whisker'] == values[inside].max()
+            assert row['Outliers'] == (~inside).sum()
+        hover = [trace.hovertemplate for trace in figure.data if trace.hovertemplate]
+        assert any('Lower whisker:' in value and 'IQR:' in value for value in hover)

@@ -122,11 +122,10 @@ def report_chart(frame, kind, dark=True):
             ax.set(xlabel="Charges ($)", ylabel="Records")
             ax.legend()
         elif kind == "box":
-            plotted = []
             for i, (group, colour) in enumerate([("no", blue), ("yes", orange)]):
                 values = frame.loc[frame.smoker.eq(group), "charges"]
                 if not values.empty:
-                    artists = ax.boxplot(
+                    ax.boxplot(
                         values,
                         positions=[i],
                         widths=0.5,
@@ -141,53 +140,8 @@ def report_chart(frame, kind, dark=True):
                         capprops={"color": colour},
                         flierprops={"markeredgecolor": colour, "markersize": 3},
                     )
-                    q1, median, q3 = values.quantile([0.25, 0.5, 0.75])
-                    plotted.append((q3 - q1, i, q1, median, q3, artists))
-            span = max(float(frame.charges.max() - frame.charges.min()), 1)
-            arrow = {'arrowstyle': '->', 'color': text, 'linewidth': 1}
-            label_box = {'facecolor': background, 'edgecolor': 'none', 'alpha': 0.9}
-            top_label = float(frame.charges.max())
-            for iqr, position, q1, median, q3, artists in plotted:
-                low = artists['whiskers'][0].get_ydata()[-1]
-                high = artists['whiskers'][1].get_ydata()[-1]
-                side = -1 if position == 0 else 1
-                alignment = 'right' if side < 0 else 'left'
-                if q1 == q3:
-                    y = median + span * 0.12
-                    ax.annotate(f"Q1 = median = Q3: {median:,.0f}", xy=(position, median),
-                                xytext=(position + side * 0.36, y), ha=alignment,
-                                color=text, fontsize=9, bbox=label_box, arrowprops=arrow)
-                    top_label = max(top_label, y)
-                else:
-                    previous = -float('inf')
-                    for title, value in [('Lower whisker', low), ('Q1', q1),
-                                         ('Median', median), ('Q3', q3), ('Upper whisker', high)]:
-                        label_y = max(value, previous + span * 0.06)
-                        edge = 0.125 if 'whisker' in title else 0.25
-                        ax.annotate(f"{title}: {value:,.0f}", xy=(position + side * edge, value),
-                                    xytext=(position + side * 0.36, label_y), va='center', ha=alignment,
-                                    color=text, fontsize=9, bbox=label_box, arrowprops=arrow)
-                        previous = label_y
-                        top_label = max(top_label, label_y)
-                    inner = -side
-                    ax.annotate('', xy=(position + inner * 0.33, q1),
-                                xytext=(position + inner * 0.33, q3),
-                                arrowprops={'arrowstyle': '|-|', 'color': text})
-                    ax.text(position + inner * 0.37, (q1 + q3) / 2, f'IQR: {iqr:,.0f}',
-                            ha='left' if inner > 0 else 'right', va='center',
-                            color=text, fontsize=9, bbox=label_box)
-                outliers = artists['fliers'][0].get_ydata()
-                if len(outliers):
-                    y = float(max(outliers))
-                    label_y = max(y + span * 0.1, top_label if position == 1 else y + span * 0.1)
-                    label = (f"Outliers: {len(outliers)}\n"
-                             f"{min(outliers):,.0f}–{max(outliers):,.0f}")
-                    ax.annotate(label, xy=(position, y), xytext=(position + side * 0.38, label_y),
-                                ha=alignment, color=text, fontsize=9, bbox=label_box, arrowprops=arrow)
-                    top_label = max(top_label, label_y)
-            ax.set_ylim(min(0, frame.charges.min() - span * 0.07), top_label + span * 0.12)
             ax.set_xticks([0, 1], ["Non-smokers", "Smokers"])
-            ax.set_xlim(-1.05, 2.05)
+            ax.set_xlim(-0.7, 1.7)
         elif kind in ["agechart", "bmichart"]:
             key = "age" if kind == "agechart" else "bmi"
             for group, colour, marker in [("no", blue, "o"), ("yes", orange, "^")]:
