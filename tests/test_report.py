@@ -85,3 +85,35 @@ def test_bmi_trends_follow_selected_smoking_groups():
     assert len(figure.axes[0].lines) == 0
     assert 'unavailable' in figure.axes[0].get_legend_handles_labels()[1][0]
     plt.close(figure)
+
+
+def test_distribution_shape_matches_independent_statistics():
+    import numpy as np
+    from scipy.stats import kurtosis, skew
+
+    from src.report import distribution_shape
+
+    _, frame, _ = prepare_data()
+    for values in [frame.charges, frame.loc[frame.smoker.eq('yes'), 'charges']]:
+        text = distribution_shape(values)
+        assert f'{skew(values, bias=False):.2f}' in text
+        assert f'{kurtosis(values, fisher=True, bias=False):.2f}' in text
+    notes = explanations(frame)
+    assert '30 equal-width' in notes['hist']
+    assert '1.52' in notes['hist'] and '1.61' in notes['hist']
+    assert '3.15' in notes['box'] and '-1.04' in notes['box']
+    assert '46 points above' in notes['box']
+    # Asymmetry must come from the third moment, not a mean/median shortcut.
+    values = frame.charges.head(4).copy()
+    values[:] = np.array([-10., 0., 0., 1.])
+    assert 'negative' in distribution_shape(values)
+
+
+def test_distribution_notes_handle_constant_and_tiny_groups():
+    import pandas as pd
+
+    from src.report import distribution_shape
+
+    for values in [pd.Series([5.]), pd.Series([5., 5., 5., 5.])]:
+        assert 'no variation' in distribution_shape(values)
+    assert 'At least four' in distribution_shape(pd.Series([1., 2., 6.]))

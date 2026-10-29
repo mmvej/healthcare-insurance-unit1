@@ -7888,7 +7888,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>Matplotlib created a temporary cache directory at /var/folders/w8/gfpcq2yx3pqf8g7klkl281gr0000gn/T/matplotlib-y10crl9x because there was an issue with the default path (/Users/mmv/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+<pre>Matplotlib created a temporary cache directory at /var/folders/w8/gfpcq2yx3pqf8g7klkl281gr0000gn/T/matplotlib-tecpvkc5 because there was an issue with the default path (/Users/mmv/.matplotlib); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
 </pre>
 </div>
 </div>
@@ -8489,6 +8489,115 @@ Standard deviation: 12110.01
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7f2a20f7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Distribution-shape:-skewness-and-kurtosis-(2.1,-3.3)">Distribution shape: skewness and kurtosis (2.1, 3.3)<a class="anchor-link" href="#Distribution-shape:-skewness-and-kurtosis-(2.1,-3.3)">¶</a></h3><p>Skewness describes asymmetry: positive values indicate asymmetry towards high charges and negative values towards low charges. Excess kurtosis describes the weight in extreme deviations relative to a normal-distribution reference of zero. It does not simply describe how tall a peak looks. Both are sample-adjusted estimates; small selections and extreme records can strongly affect them.</p>
+<p>The histogram uses 30 equal-width intervals and counts records in each. Its dashed median line appears in the dashboard; the original notebook histogram above has no reference line. A positive overall skew can combine different subgroup shapes, so compare the pooled results with each smoking group rather than assuming one bell-shaped distribution.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d05ba49f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">shape_rows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">"All records"</span><span class="p">,</span> <span class="n">cleaned</span><span class="p">[</span><span class="s2">"charges"</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">"Non-smokers"</span><span class="p">,</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cleaned</span><span class="p">[</span><span class="s2">"smoker"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"no"</span><span class="p">,</span> <span class="s2">"charges"</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">"Smokers"</span><span class="p">,</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cleaned</span><span class="p">[</span><span class="s2">"smoker"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"yes"</span><span class="p">,</span> <span class="s2">"charges"</span><span class="p">]),</span>
+<span class="p">]:</span>
+    <span class="n">shape_rows</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"Group"</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span> <span class="s2">"Records"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">),</span>
+                       <span class="s2">"Skewness"</span><span class="p">:</span> <span class="n">values</span><span class="o">.</span><span class="n">skew</span><span class="p">(),</span> <span class="s2">"Excess kurtosis"</span><span class="p">:</span> <span class="n">values</span><span class="o">.</span><span class="n">kurt</span><span class="p">()})</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">shape_rows</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"Group"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Records</th>
+<th>Skewness</th>
+<th>Excess kurtosis</th>
+</tr>
+<tr>
+<th>Group</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>All records</th>
+<td>1338</td>
+<td>1.52</td>
+<td>1.61</td>
+</tr>
+<tr>
+<th>Non-smokers</th>
+<td>1064</td>
+<td>1.54</td>
+<td>3.15</td>
+</tr>
+<tr>
+<th>Smokers</th>
+<td>274</td>
+<td>0.13</td>
+<td>-1.04</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=53c5813c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Overall charges are right-skewed (1.52), with positive excess kurtosis (1.61). Many records occupy the lower charge intervals, while relatively few high charges extend the right tail. The mean is pulled above the median. Non-smokers are also right-skewed (1.54), with greater excess kurtosis (3.15); smokers have much lower overall asymmetry (0.13) and negative excess kurtosis (−1.04). Near-zero skew does not imply a normal or single-peaked distribution. These measures explain the observed sample, not causes or future costs.</p>
+<p>The smoking box plots show the median, middle 50% and whiskers, rather than the frequency of each charge interval. Non-smokers have 46 observations above their upper 1.5 × IQR fence; smokers have none beyond either fence. This does not mean smokers have no high charges: each group has its own quartiles and spread. All flagged observations are retained.</p>
+<p>Definitions: <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.skew.html">pandas skewness</a> and <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.kurt.html">Fisher excess kurtosis</a>.</p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a720e433">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -8504,7 +8613,7 @@ Standard deviation: 12110.01
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">smoking_summary</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"smoker"</span><span class="p">)[</span><span class="s2">"charges"</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"count"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"median"</span><span class="p">])</span>
@@ -8519,7 +8628,7 @@ Standard deviation: 12110.01
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8575,7 +8684,7 @@ Standard deviation: 12110.01
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">cleaned</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">"smoker"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"charges"</span><span class="p">)</span>
@@ -8627,7 +8736,7 @@ Standard deviation: 12110.01
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"age"</span><span class="p">,</span> <span class="s2">"bmi"</span><span class="p">]:</span>
@@ -8660,7 +8769,7 @@ Standard deviation: 12110.01
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8727,7 +8836,7 @@ Standard deviation: 12110.01
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Compare the relationships within each smoking group.</span>
@@ -8789,7 +8898,7 @@ Name: charges, dtype: float64
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">region_summary</span> <span class="o">=</span> <span class="n">cleaned</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"region"</span><span class="p">)[</span><span class="s2">"charges"</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"count"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"median"</span><span class="p">])</span>
@@ -8881,7 +8990,7 @@ Name: charges, dtype: float64
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8991,7 +9100,7 @@ Name: charges, dtype: float64
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cleaned</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
@@ -9008,7 +9117,7 @@ Name: charges, dtype: float64
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9082,7 +9191,7 @@ Name: charges, dtype: float64
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">cleaned</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"age_band"</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s2">"charges"</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"count"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -9096,7 +9205,7 @@ Name: charges, dtype: float64
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9170,7 +9279,7 @@ Name: charges, dtype: float64
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -9371,8 +9480,14 @@ Name: charges, dtype: float64
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>smokingcomparison: The smoking group has higher average costs, with a gap of $23,615.96. Smokers’ mean costs are 3.80 times those of non-smokers.
-box: The boxes show the middle half of each group’s recorded costs. The higher median for smokers shows that the difference extends to typical records, rather than only a few unusually large amounts.
-hist: Larger amounts pull the mean above the median. The average therefore exceeds the cost of the middle record, making the median useful for describing a typical case.
+box: The line inside each box is the median; the box runs from the 25th to the 75th percentile, so its height is the IQR (the middle 50% of charges). Whiskers reach the most extreme observed values within 1.5 × IQR of the box edges. Points beyond them are flagged extremes, not automatically errors, and are retained.
+
+Non-smokers: median $7,345.41; middle half $3,986.44–$11,362.89 (IQR $7,376.45). There are 46 points above and 0 below the whisker limits. Skewness is 1.54: positive, indicating asymmetry towards higher charges. Excess kurtosis is 3.15, indicating greater weight in extreme deviations than a normal-distribution reference. These measures do not establish normality or show how many peaks are present.
+
+Smokers: median $34,456.35; middle half $20,826.24–$41,019.21 (IQR $20,192.96). There are 0 points above and 0 below the whisker limits. Skewness is 0.13: close to zero, suggesting limited overall asymmetry. Excess kurtosis is -1.04, indicating less weight in extreme deviations than a normal-distribution reference. These measures do not establish normality or show how many peaks are present.
+
+Compare box position for differences in typical charges and box height for differences in spread. A box plot does not reveal separate peaks; use the histogram to inspect that shape. Neither the group difference nor its skewness proves causation.
+hist: Each bar counts records in one of 30 equal-width charge intervals; taller bars mean more records, not higher total spending. The most populated interval is $1,122–$3,210 (15.5% of the selection). The middle half of charges lies between $4,740.29 and $16,639.91; the observed range is $1,121.87–$63,770.43. The dashed line marks the median. Skewness is 1.52: positive, indicating asymmetry towards higher charges. Excess kurtosis is 1.61, indicating greater weight in extreme deviations than a normal-distribution reference. These measures do not establish normality or show how many peaks are present. The right tail extends towards unusually high charges. The median and IQR describe the centre and spread without being pulled as strongly by those extremes; the mean still matters for aggregate spending.
 regionchart: Southeast has the highest mean; northeast has the highest median. Different rankings show that the region with the largest average is not necessarily the one with the largest typical cost.
 agechart: Higher age tends to accompany higher costs (correlation 0.30). The correlation is 0.63 among non-smokers and 0.37 among smokers. Separating the groups reveals a pattern that the overall result can hide.
 bmichart: Higher BMI tends to accompany higher costs (correlation 0.20). The correlation is 0.08 among non-smokers and 0.81 among smokers. Separating the groups reveals a pattern that the overall result can hide.
@@ -9403,7 +9518,7 @@ Dashboard group counts, summaries and BMI lines checked.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.regression</span><span class="w"> </span><span class="kn">import</span> <span class="n">regression_results</span><span class="p">,</span> <span class="n">prediction_chart</span><span class="p">,</span> <span class="n">interpretation</span>

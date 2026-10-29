@@ -56,3 +56,8 @@ The revised notebook documents workflow lessons without inventing personal learn
 ## Optional regression — 29 October 2026
 
 After discussing feasibility, the user requested the predictive extension (“do it”). Codex implemented a training-median baseline and ordinary least-squares regression with a BMI–smoking interaction motivated by the earlier analysis. A fixed grouped train/test split keeps identical rows together; preprocessing and fitting use training data only. No model search or test-set tuning was performed. The notebook records baseline/model and subgroup errors, a predicted-versus-actual plot and limitations. Independent error calculations and a test-target perturbation check validate the reported pipeline. The model is labelled exploratory because the full sample was previously examined; no clinical, causal, current-budget or individual-pricing claim is made. This remains AI-assisted work requiring the student's review.
+
+
+## Distribution narrative revision — 29 October 2026
+
+The user requested replacing the generic histogram/box-plot descriptions with explicit skewness and kurtosis interpretation. The old mean-versus-median and higher-smoker-median prose was replaced with calculations from the current selection: bar intervals, concentration, quartiles, skewness, sample-adjusted Fisher excess kurtosis and box-plot fences. Definitions were checked against pandas documentation; tests independently compare the values with SciPy. No normality, peak-count or causal conclusion is inferred from a moment alone. The notebook and management_narrative.txt retain the revised full-sample text.

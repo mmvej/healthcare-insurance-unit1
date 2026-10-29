@@ -174,6 +174,96 @@ def report_chart(frame, kind, dark=True):
         return fig
 
 
+def distribution_shape(values):
+    """Describe sample-adjusted skewness and Fisher excess kurtosis safely."""
+    if len(values) < 3 or values.nunique() < 2:
+        return "There are too few records or no variation to describe skewness and kurtosis reliably."
+    skew = values.skew()
+    direction = (
+        "positive, indicating asymmetry towards higher charges"
+        if skew > 0.5 else
+        "negative, indicating asymmetry towards lower charges"
+        if skew < -0.5 else
+        "close to zero, suggesting limited overall asymmetry"
+    )
+    text = f"Skewness is {skew:.2f}: {direction}. "
+    if len(values) < 4:
+        return text + "At least four records are needed for excess kurtosis."
+    kurtosis = values.kurt()
+    tails = (
+        "greater weight in extreme deviations than a normal-distribution reference"
+        if kurtosis > 0 else
+        "less weight in extreme deviations than a normal-distribution reference"
+        if kurtosis < 0 else
+        "the same fourth-moment value as a normal-distribution reference"
+    )
+    text += f"Excess kurtosis is {kurtosis:.2f}, indicating {tails}. "
+    text += "These measures do not establish normality or show how many peaks are present."
+    if len(values) < 20:
+        text += " This small selection makes both shape estimates especially unstable."
+    return text
+
+
+def histogram_description(values):
+    """Connect the actual 30-bin histogram to concentration, spread and tails."""
+    counts, edges = np.histogram(values, bins=30)
+    peak = int(counts.argmax())
+    q1, q3 = values.quantile([0.25, 0.75])
+    text = (
+        "Each bar counts records in one of 30 equal-width charge intervals; taller bars "
+        "mean more records, not higher total spending. "
+        f"The most populated interval is ${edges[peak]:,.0f}–${edges[peak + 1]:,.0f} "
+        f"({100 * counts[peak] / len(values):.1f}% of the selection). "
+        f"The middle half of charges lies between ${q1:,.2f} and ${q3:,.2f}; "
+        f"the observed range is ${values.min():,.2f}–${values.max():,.2f}. "
+        "The dashed line marks the median. "
+    )
+    text += distribution_shape(values)
+    if len(values) >= 3 and values.nunique() > 1:
+        if values.skew() > 0.5:
+            text += (
+                " The right tail extends towards unusually high charges. The median and IQR "
+                "describe the centre and spread without being pulled as strongly by those extremes; "
+                "the mean still matters for aggregate spending."
+            )
+        elif values.skew() < -0.5:
+            text += " The left tail extends towards unusually low charges; compare the median and IQR with the mean."
+        else:
+            text += " A near-zero skew does not make the distribution bell-shaped; separated clusters can also balance each other."
+    return text
+
+
+def box_description(frame):
+    """Explain quartiles, whiskers and retained extremes for actual selected groups."""
+    parts = [
+        ("The line inside each box is the median; the box runs from the 25th to the 75th "
+        "percentile, so its height is the IQR (the middle 50% of charges). Whiskers reach "
+        "the most extreme observed values within 1.5 × IQR of the box edges. Points beyond "
+        "them are flagged extremes, not automatically errors, and are retained.")
+    ]
+    for group, label in [('no', 'Non-smokers'), ('yes', 'Smokers')]:
+        values = frame.loc[frame.smoker.eq(group), 'charges']
+        if values.empty:
+            continue
+        q1, q3 = values.quantile([0.25, 0.75])
+        iqr = q3 - q1
+        below = int((values < q1 - 1.5 * iqr).sum())
+        above = int((values > q3 + 1.5 * iqr).sum())
+        parts.append(
+            f"{label}: median ${values.median():,.2f}; middle half "
+            f"${q1:,.2f}–${q3:,.2f} (IQR ${iqr:,.2f}). "
+            f"There are {above} points above and {below} below the whisker limits. "
+            + distribution_shape(values)
+        )
+    if frame.smoker.nunique() == 2:
+        parts.append(
+            "Compare box position for differences in typical charges and box height for "
+            "differences in spread. A box plot does not reveal separate peaks; use the "
+            "histogram to inspect that shape. Neither the group difference nor its skewness proves causation."
+        )
+    return '\n\n'.join(parts)
+
+
 def explanations(frame):
     """Interpret the selected data without duplicating chart labels and counts."""
     out = {}
@@ -190,40 +280,14 @@ def explanations(frame):
             f"The {group} group has higher average costs, with a gap of ${abs(b - a):,.2f}. "
             + ratio
         )
-        if yes.charges.median() > no.charges.median():
-            pattern = (
-                "The higher median for smokers shows that the difference extends to "
-                "typical records, rather than only a few unusually large amounts."
-            )
-        elif yes.charges.median() < no.charges.median():
-            pattern = (
-                "The median is higher among non-smokers in this selection, so the "
-                "middle of each distribution adds context beyond the averages."
-            )
-        else:
-            pattern = "The medians coincide; the boxes still show variation within each group."
-        out["box"] = (
-            "The boxes show the middle half of each group’s recorded costs. " + pattern
-        )
     else:
         group = "smokers" if len(yes) else "non-smokers"
         out["smokingcomparison"] = (
             f"Only {group} are selected. Select both smoking groups "
             "to compare their costs."
         )
-        out["box"] = (
-            "The box shows how much costs vary within the selected group; "
-            "the centre line marks the median."
-        )
-    difference = frame.charges.mean() - frame.charges.median()
-    out["hist"] = (
-        "Larger amounts pull the mean above the median. The average therefore exceeds the "
-        "cost of the middle record, making the median useful for describing a typical case."
-        if difference > 0
-        else "The mean falls below the median. The distribution adds context that a single average would miss."
-        if difference < 0
-        else "The mean and median coincide here; the distribution shows the variation around them."
-    )
+    out["box"] = box_description(frame)
+    out["hist"] = histogram_description(frame.charges)
     regions = summary(frame, "region")
     mean_region, median_region = regions["mean"].idxmax(), regions["median"].idxmax()
     if len(regions) > 1:
