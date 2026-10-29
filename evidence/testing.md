@@ -10,6 +10,8 @@ The existing automated suite passed: **16 passed** (`streamlit_parity_tests.txt`
 
 Live check on 29 October: the Streamlit URL displayed its sleeping-app screen. After waking, the deployment logs reported that cloning `mmvej/healthcare-insurance-unit1`, branch `main`, failed. GitHub metadata confirms that the repository exists, `main` exists and the connected user has push access, but its visibility is now private. This is consistent with a deployment source-access problem; the precise authentication cause is not established. Assessor access to the app and private repository is not confirmed. No repository visibility or sharing permissions were changed.
 
+Follow-up on 29 October: the owner made the repository public; GitHub metadata confirms `visibility: public`. A fresh browser visit still displays “Error running app”. No further reboot was attempted: the earlier reboot confirmation was blocked by automatic approval review because interruption had not been specifically authorised. Dashboard recovery is still unverified.
+
 These results validate the current local revision. Earlier entries below describe their named historical versions. The student's personal review and college submission are not established by these checks.
 
 ## Streamlit migration — 28 October 2026

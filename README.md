@@ -8,7 +8,7 @@ Repository URL: https://github.com/mmvej/healthcare-insurance-unit1
 
 Sites web dashboard: https://healthcare-insurance-unit1-mmvej.moseth.chatgpt.site (private to the owner by default). This browser-based edition uses the same cleaned records and descriptive calculations. Its source is in web_dashboard/.
 
-Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **29 October access check:** the app failed to download its source repository after waking; assessor access is not currently confirmed. GitHub reports the repository as private, so repository access must also be arranged for the assessor. The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
+Streamlit dashboard URL: https://mnus7hgvzqu2kdugdnuhvu.streamlit.app/. **29 October access check:** GitHub now confirms the repository is public after the owner changed its visibility. A fresh dashboard visit still displays “Error running app”, so dashboard access remains unresolved. The native Python edition follows the Sites report with eight charts, selection-aware explanations, region/smoking/age filters, reset, dark/light mode, definitions and conclusion.
 
 ## Questions and findings
 
