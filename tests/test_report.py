@@ -141,3 +141,18 @@ def test_captions_follow_filtered_chart_values():
     assert 'Non-smokers have higher mean' in changed_notes['smokingcomparison']
     assert np.isfinite(gap)
     assert all(len(text.split()) < 70 for text in notes.values())
+
+
+def test_histogram_labels_follow_selected_records():
+    _, frame, _ = prepare_data()
+    for selected in [frame, frame.loc[frame.smoker.eq('yes')]]:
+        figure = report_chart(selected, 'hist')
+        labels = [item.get_text() for item in figure.axes[0].texts]
+        assert f'Median: {selected.charges.median():,.0f} USD' in labels
+        assert f'Mean: {selected.charges.mean():,.0f} USD' in labels
+        assert any('Most populated interval' in label for label in labels)
+        plt.close(figure)
+    figure = report_chart(frame.head(1), 'hist')
+    assert len(figure.axes[0].texts) == 1
+    assert 'All charges:' in figure.axes[0].texts[0].get_text()
+    plt.close(figure)

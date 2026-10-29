@@ -117,12 +117,39 @@ def report_chart(frame, kind, dark=True):
             ax.set_ylim(0, largest * 1.28)
             ax.legend()
         elif kind == "hist":
-            ax.hist(frame.charges, bins=30, color=blue, edgecolor=background)
-            ax.axvline(
-                frame.charges.median(), color=text, linestyle="--", label="Median"
-            )
+            counts, edges, _ = ax.hist(frame.charges, bins=30, color=blue, edgecolor=background)
+            median, mean = frame.charges.median(), frame.charges.mean()
+            peak = int(counts.argmax())
+            highest = float(counts.max())
+            ax.set_ylim(0, highest * 1.3)
             ax.set(xlabel="Charges ($)", ylabel="Records")
-            ax.legend()
+
+            def label_at(label, point, position):
+                ax.annotate(
+                    label, xy=point, xytext=position, textcoords='axes fraction',
+                    ha='center', va='top', fontsize=10, color=text,
+                    bbox={'boxstyle': 'round,pad=0.4', 'facecolor': background,
+                          'edgecolor': text, 'alpha': 0.95},
+                    arrowprops={'arrowstyle': '->', 'color': text, 'linewidth': 1.1},
+                )
+
+            ax.axvline(median, color=text, linestyle='--', linewidth=1.5)
+            if frame.charges.nunique() == 1:
+                label_at(f"All charges: {median:,.0f} USD", (median, highest), (0.5, 0.96))
+            else:
+                ax.axvline(mean, color=orange, linestyle=':', linewidth=1.5)
+                label_at(
+                    f"Most populated interval\n{edges[peak]:,.0f}–{edges[peak + 1]:,.0f} USD",
+                    ((edges[peak] + edges[peak + 1]) / 2, highest), (0.32, 0.97),
+                )
+                label_at(f"Median: {median:,.0f} USD", (median, highest * 0.58), (0.43, 0.69))
+                label_at(f"Mean: {mean:,.0f} USD", (mean, highest * 0.28), (0.76, 0.88))
+                skew = frame.charges.skew() if len(frame) >= 3 else 0
+                lower = skew < -0.5
+                tail = frame.charges.quantile(0.05 if lower else 0.95)
+                index = min(max(int(np.searchsorted(edges, tail, side='right') - 1), 0), 29)
+                name = 'Lower tail' if lower else 'Right tail' if skew > 0.5 else 'High-charge end'
+                label_at(name, (tail, counts[index]), (0.76, 0.47))
         elif kind == "box":
             for i, (group, colour) in enumerate([("no", blue), ("yes", orange)]):
                 values = frame.loc[frame.smoker.eq(group), "charges"]

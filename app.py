@@ -223,7 +223,7 @@ with st.expander("Variable and statistical definitions"):
     with st.expander("How to read the charts"):
         st.markdown("""
     - **Comparison bars:** heights show group means and medians. Counts give the size of each group; differences are descriptive associations.
-    - **Histogram:** the 30 equal-width intervals show record counts, not spending totals. The dashed line marks the median.
+    - **Histogram:** the 30 equal-width intervals show record counts, not spending totals. The dashed line marks the median and the dotted line marks the mean. In-chart labels identify the most populated interval and tail or high-charge end.
     - **Box plots:** boxes contain the middle 50%, with a median line. Whiskers reach observed values within 1.5 × IQR of each box edge; points beyond them are retained extremes.
     - **Age/BMI scatter plots:** each point is a record. Colour and shape identify smoking groups; BMI dashed lines are separate least-squares fits. Correlation measures linear association, not causation.
     - **Prediction scatter:** the dashed diagonal marks perfect prediction. Above it means overprediction; below it means underprediction. MAE is the average absolute error in original charge units, not percentage accuracy.

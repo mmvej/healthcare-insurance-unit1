@@ -6,7 +6,7 @@ The current notebook contains 39 cells, including 16 code cells. A fresh kernel 
 
 New executed evidence reconciles sex-by-smoking and children-group counts, means and medians with the dashboard's shared summary function. Both sets of group counts sum to 1,338. Checks confirm the sex-group mean reversal across smoking groups, the non-monotonic children-group means, and the two plotted BMI lines against NumPy least-squares calculations. Current chart explanations are saved in the notebook output. The new BMI figure was visually inspected for readable labels and lines.
 
-The existing automated suite passed: **23 passed** (`streamlit_parity_tests.txt`). Ruff passed for `src`, `app.py`, `tests` and `scripts` (`lint_results.txt`); notebook cells are not included in that lint command. The tests exercise all eight charts, filters, empty and tiny selections, themes, reset, independent CSV calculations and BMI trend handling.
+The existing automated suite passed: **24 passed** (`streamlit_parity_tests.txt`). Ruff passed for `src`, `app.py`, `tests` and `scripts` (`lint_results.txt`); notebook cells are not included in that lint command. The tests exercise all eight charts, filters, empty and tiny selections, themes, reset, independent CSV calculations and BMI trend handling.
 
 ### Current live deployment status — verified 29 October 2026
 
@@ -14,7 +14,7 @@ The owner made the GitHub repository public and authorised a dashboard restart. 
 
 A subsequent browser check confirmed all eight chart sections and the default 1,338 records, mean 13,270.42 and median 9,382.03. Selecting smokers returned 274 records, mean 32,050.23 and median 34,456.35, with updated chart explanations. Clearing the region selection displayed the no-records message without results; reset restored all 1,338 records and the original summary figures. The Sources section now uses native Streamlit link buttons for the repository and executed notebook. Their deployed destinations were inspected; opening GitHub through those buttons was not independently confirmed in the browser environment.
 
-The latest local verification passed all 23 tests and Ruff. The local and remote revisions matched at e38ea76 during the assessment recheck. These checks establish working deployment and filter behaviour in the browser session used; a separate signed-out assessor session was not tested.
+The latest local verification passed all 24 tests and Ruff. The local and remote revisions matched at e38ea76 during the assessment recheck. These checks establish working deployment and filter behaviour in the browser session used; a separate signed-out assessor session was not tested.
 
 The student's personal review and college submission remain unverified.
 
@@ -43,3 +43,7 @@ All eight descriptive plots, the within-region table and the prediction scatter 
 Chart-reading and model-method explanations are consolidated in the variable/statistical definitions expander. Added tests independently reconcile filtered gaps, child-group rankings, correlations and prediction-error groups; a changed-data case confirms that the smoking comparison reverses when its data reverses. All 23 tests pass, fresh notebook execution succeeds, and full-sample narratives are retained in management_narrative.txt.
 
 The regression section is now titled “Predictive regression”. Its introduction explains learning from one set of records and checking against separate records. Table headings use “Average prediction error” and “Simple median estimate”; calculations and evaluation scope are unchanged.
+
+## Histogram labels — 29 October 2026
+
+Added selected-data labels inside the histogram for the most populated interval, median, mean and tail/high-charge end. The mean uses a dotted line and the median a dashed line. Directional tail wording is based on the selected skew; constant/single-record selections get one combined value label. Visual checks covered the full dataset in dark mode and smokers in light mode. A new test verifies selected-data values and the single-record fallback. All 24 tests pass.
