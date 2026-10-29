@@ -101,8 +101,9 @@ def test_distribution_shape_matches_independent_statistics():
     notes = explanations(frame)
     assert '1.52' in notes['hist'] and '1.61' in notes['hist']
     assert '46 among non-smokers and 0 among smokers' in notes['box']
-    assert 'Smokers have a higher median' in notes['box']
-    assert 'smokers have a wider' in notes['box']
+    assert '34,456 USD versus 7,345 USD' in notes['box']
+    assert '2.74 times as large' in notes['box']
+    assert 'ranges do not overlap' in notes['box']
     # Asymmetry must come from the third moment, not a mean/median shortcut.
     values = frame.charges.head(4).copy()
     values[:] = np.array([-10., 0., 0., 1.])

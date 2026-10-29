@@ -2,7 +2,7 @@ Current full-sample chart explanations — 29 October 2026
 
 Brief analytical findings computed from the plotted data. General chart-reading guidance is in the dashboard definitions.
 
-box: Smokers have a higher median; smokers have a wider middle-50% spread. Upper outliers: 46 among non-smokers and 0 among smokers (relative to each group’s own whiskers).
+box: Smokers’ median charges are 34,456 USD versus 7,345 USD for non-smokers. Smokers’ IQR is 2.74 times as large; the middle-50% ranges do not overlap. Upper outliers: 46 among non-smokers and 0 among smokers, using each group’s own cutoff.
 hist: Positive skew (1.52): a tail towards higher charges. Positive excess kurtosis (1.61): greater weight in extreme deviations relative to the normal reference.
 smokingcomparison: Smokers have higher mean charges by 23,616 USD (smokers/non-smokers: 3.80 times). The median is also higher among smokers by 27,111 USD.
 regionchart: Mean charges span 2,388 USD across regions; Southeast has the highest mean and Southwest the lowest. Northeast has the highest median.

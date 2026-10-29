@@ -203,7 +203,7 @@ def histogram_description(values):
 
 
 def box_description(frame):
-    """Summarise the displayed differences in centre, spread and outliers."""
+    """Quantify median separation, relative IQR and selected-group outliers."""
     groups = {}
     for group, label in [('no', 'Non-smokers'), ('yes', 'Smokers')]:
         values = frame.loc[frame.smoker.eq(group), 'charges']
@@ -213,27 +213,32 @@ def box_description(frame):
         iqr = q3 - q1
         above = int((values > q3 + 1.5 * iqr).sum())
         below = int((values < q1 - 1.5 * iqr).sum())
-        groups[group] = (label, values.median(), iqr, above, below)
+        groups[group] = (label, values.median(), iqr, above, below, q1, q3)
     if len(groups) == 2:
         no, yes = groups['no'], groups['yes']
+        higher, lower = (yes, no) if yes[1] >= no[1] else (no, yes)
         centre = (
-            "Smokers have a higher median" if yes[1] > no[1] else
-            "Non-smokers have a higher median" if yes[1] < no[1] else
-            "Both groups have the same median"
+            f"{higher[0]}’ median charges are {higher[1]:,.0f} USD versus "
+            f"{lower[1]:,.0f} USD for {lower[0].lower()}. "
+            if higher[1] != lower[1] else
+            f"Both groups have median charges of {higher[1]:,.0f} USD. "
         )
-        spread = (
-            "smokers have a wider middle-50% spread" if yes[2] > no[2] else
-            "non-smokers have a wider middle-50% spread" if yes[2] < no[2] else
-            "both groups have the same middle-50% spread"
-        )
+        wider, narrower = (yes, no) if yes[2] >= no[2] else (no, yes)
+        if wider[2] == narrower[2]:
+            spread = 'Both groups have the same IQR'
+        elif narrower[2] > 0:
+            spread = f"{wider[0]}’ IQR is {wider[2] / narrower[2]:.2f} times as large"
+        else:
+            spread = f"{wider[0]} have an IQR of {wider[2]:,.0f} USD while the other group’s IQR is zero"
+        overlap = 'do not overlap' if max(no[5], yes[5]) > min(no[6], yes[6]) else 'overlap'
         return (
-            f"{centre}; {spread}. "
-            f"Upper outliers: {no[3]} among non-smokers and {yes[3]} among smokers "
-            "(relative to each group’s own whiskers)."
+            centre + f"{spread}; the middle-50% ranges {overlap}. "
+            f"Upper outliers: {no[3]} among non-smokers and {yes[3]} among smokers, "
+            'using each group’s own cutoff.'
         )
-    label, _median, iqr, above, below = next(iter(groups.values()))
+    label, median, iqr, above, below, _q1, _q3 = next(iter(groups.values()))
     return (
-        f"{label}: the middle 50% spans {iqr:,.0f} USD (IQR). "
+        f"{label}: median charges are {median:,.0f} USD, with an IQR of {iqr:,.0f} USD. "
         f"There are {above} upper and {below} lower outliers beyond the whiskers."
     )
 

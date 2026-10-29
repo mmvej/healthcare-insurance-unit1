@@ -30,7 +30,7 @@ Live deployment check: the “Optional predictive regression” expander opened 
 
 ## Distribution explanations — 29 October 2026
 
-Replaced the generic histogram and smoking box-plot narratives with selected-data explanations. Histogram captions summarise skewness and Fisher excess kurtosis in two sentences. Box-plot captions compare group medians, middle-50% spread and upper outliers in two sentences. Detailed statistical definitions remain in the expander and notebook. Overall adjusted skewness is 1.52 and excess kurtosis 1.61; non-smokers 1.54 / 3.15; smokers 0.13 / −1.04. Near-zero skew is not described as proof of normality or a single peak. Kurtosis is interpreted as extreme-deviation weight relative to the normal reference, not peak height. Small/constant selections have specific fallbacks.
+Replaced the generic histogram and smoking box-plot narratives with selected-data explanations. Histogram captions summarise skewness and Fisher excess kurtosis in two sentences. Box-plot captions quantify both medians, the IQR ratio, overlap of the middle-50% ranges and upper outliers in three short sentences. Detailed statistical definitions remain in the expander and notebook. Overall adjusted skewness is 1.52 and excess kurtosis 1.61; non-smokers 1.54 / 3.15; smokers 0.13 / −1.04. Near-zero skew is not described as proof of normality or a single peak. Kurtosis is interpreted as extreme-deviation weight relative to the normal reference, not peak height. Small/constant selections have specific fallbacks.
 
 Two additional tests check the reported sample moments against independent SciPy calculations and cover tiny and constant groups. Fresh notebook execution saved the new group shape table and current explanations.
 
