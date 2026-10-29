@@ -62,7 +62,9 @@ h1 {{font-size:2rem!important}}
 [data-testid="stExpander"] summary svg {{fill:currentColor}}
 .report-definitions table {{width:100%;border-collapse:collapse;font-size:15px}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
-.report-definitions .terms {{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}}
+.report-definitions .terms {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}}
+.report-definitions .terms p {{min-width:0}}
+.report-definitions .equation {{display:block;overflow-x:auto;padding:10px 0;font-size:16px;line-height:1.8}}
 .report-definitions p {{font-size:15px;line-height:1.7;color:{text}}}
 @media(max-width:760px){{.report-definitions .terms{{grid-template-columns:1fr}}.report-definitions .tablewrap{{overflow:auto}}}}
 </style>""",
