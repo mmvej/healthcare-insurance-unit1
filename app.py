@@ -58,17 +58,18 @@ h1 {{font-size:2rem!important}}
 [data-testid="stMain"] [data-testid="stMarkdownContainer"] li {{font-size:19px;line-height:1.65}}
 [data-testid="stMain"] label p {{font-size:19px}}
 
-.regional-table {{overflow-x:auto;border:1px solid {border};border-radius:8px;background:{surface};color:{text}}}
-.regional-table table {{width:100%;border-collapse:collapse;font-size:18px;font-variant-numeric:tabular-nums}}
-.regional-table th,.regional-table td {{padding:12px;border-bottom:1px solid {border};text-align:right;white-space:nowrap;background:{surface};color:{text}}}
-.regional-table th:first-child,.regional-table td:first-child,.regional-table th:nth-child(2),.regional-table td:nth-child(2) {{text-align:left}}
+.regional-table {{width:fit-content;max-width:100%;margin:0 auto;overflow-x:auto;border:1px solid {border};border-radius:8px;background:{surface};color:{text}}}
+.regional-table table {{width:max-content;border-collapse:collapse;font-size:18px;font-variant-numeric:tabular-nums}}
+.regional-table th,.regional-table td {{padding:12px;border-bottom:1px solid {border};text-align:center!important;white-space:nowrap;background:{surface};color:{text}}}
+.regional-table th:first-child,.regional-table td:first-child,.regional-table th:nth-child(2),.regional-table td:nth-child(2) {{text-align:center!important}}
 [data-testid="stExpander"] details,[data-testid="stExpander"] summary {{background-color:{surface}!important;color:{text}!important}}
 [data-testid="stExpander"] summary *,[data-testid="stExpander"] details[open] summary * {{color:{text}!important}}
 [data-testid="stExpander"] summary {{padding:16px 20px!important}}
 [data-testid="stExpander"] summary p {{font-size:clamp(1.15rem,2.2vw,1.5rem)!important;font-weight:700!important;line-height:1.35!important;margin:0!important}}
 [data-testid="stExpander"] summary svg {{fill:currentColor;width:24px;height:24px;flex-shrink:0}}
-.report-definitions table {{width:100%;border-collapse:collapse;font-size:18px}}
-.report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
+.report-definitions table {{width:auto;max-width:100%;margin:0 auto;border-collapse:collapse;font-size:18px}}
+.report-definitions th,.report-definitions td {{padding:12px;text-align:center!important;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
+.report-definitions .tablewrap {{width:fit-content;max-width:100%;margin:0 auto;overflow-x:auto}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}}
 .report-definitions .terms p {{min-width:0}}
 .report-definitions p {{font-size:19px;line-height:1.7;color:{text}}}
