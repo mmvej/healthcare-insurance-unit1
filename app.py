@@ -55,11 +55,11 @@ st.markdown(
 [data-testid="stMainBlockContainer"] {{max-width:1240px;padding-top:3rem}}
 h1 {{font-size:2rem!important}}
 [data-testid="stMain"] [data-testid="stMarkdownContainer"] p,
-[data-testid="stMain"] [data-testid="stMarkdownContainer"] li {{font-size:18px;line-height:1.65}}
-[data-testid="stMain"] label p {{font-size:17px}}
+[data-testid="stMain"] [data-testid="stMarkdownContainer"] li {{font-size:19px;line-height:1.65}}
+[data-testid="stMain"] label p {{font-size:19px}}
 
 .regional-table {{overflow-x:auto;border:1px solid {border};border-radius:8px;background:{surface};color:{text}}}
-.regional-table table {{width:100%;border-collapse:collapse;font-size:17px;font-variant-numeric:tabular-nums}}
+.regional-table table {{width:100%;border-collapse:collapse;font-size:18px;font-variant-numeric:tabular-nums}}
 .regional-table th,.regional-table td {{padding:12px;border-bottom:1px solid {border};text-align:right;white-space:nowrap;background:{surface};color:{text}}}
 .regional-table th:first-child,.regional-table td:first-child,.regional-table th:nth-child(2),.regional-table td:nth-child(2) {{text-align:left}}
 [data-testid="stExpander"] details,[data-testid="stExpander"] summary {{background-color:{surface}!important;color:{text}!important}}
@@ -67,11 +67,11 @@ h1 {{font-size:2rem!important}}
 [data-testid="stExpander"] summary {{padding:16px 20px!important}}
 [data-testid="stExpander"] summary p {{font-size:clamp(1.15rem,2.2vw,1.5rem)!important;font-weight:700!important;line-height:1.35!important;margin:0!important}}
 [data-testid="stExpander"] summary svg {{fill:currentColor;width:24px;height:24px;flex-shrink:0}}
-.report-definitions table {{width:100%;border-collapse:collapse;font-size:17px}}
+.report-definitions table {{width:100%;border-collapse:collapse;font-size:18px}}
 .report-definitions th,.report-definitions td {{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid {border};color:{text}}}
 .report-definitions .terms {{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:24px}}
 .report-definitions .terms p {{min-width:0}}
-.report-definitions p {{font-size:17px;line-height:1.7;color:{text}}}
+.report-definitions p {{font-size:19px;line-height:1.7;color:{text}}}
 @media(max-width:760px){{.report-definitions .terms{{grid-template-columns:1fr}}.report-definitions .tablewrap{{overflow:auto}}}}
 </style>""",
     unsafe_allow_html=True,
@@ -117,10 +117,9 @@ def visual(kind, title, explanation):
                             config={"displayModeBar": False}, key="smoking_boxplot")
             st.write(explanation)
             numeric_columns = ['Lower whisker', 'Q1', 'Median', 'Q3', 'Upper whisker', 'IQR']
-            st.dataframe(
-                table.style.format({column: '{:,.2f}' for column in numeric_columns}),
-                hide_index=True, width="stretch",
-            )
+            st.html('<div class="regional-table">' + table.style.hide(axis="index").format(
+                {column: '{:,.2f}' for column in numeric_columns}
+            ).to_html() + '</div>')
             return
         figure = report_chart(selected, kind, dark=dark)
         with plt.rc_context(chart_style(dark)):
@@ -201,7 +200,7 @@ with st.expander("Predictive regression"):
         "Training-median baseline": "Simple median estimate",
         "Linear regression + BMI/smoking interaction": "Regression estimate",
     }}).rename(columns={"Test MAE": "Average prediction error (charge units)"})
-    st.dataframe(display_scores.round(2), hide_index=True)
+    st.html('<div class="regional-table">' + display_scores.to_html(index=False, float_format="{:,.2f}".format) + '</div>')
     comparison_note, _, plot_note = interpretation(scores, predictions).partition(". ")
     st.write(comparison_note + ".")
     st.write("The simple comparison uses the same typical charge—the training median—for every record. Smaller errors mean closer estimates.")
@@ -209,10 +208,10 @@ with st.expander("Predictive regression"):
     st.pyplot(figure, alt="Held-out predicted versus actual recorded charges")
     plt.close(figure)
     st.write(plot_note)
-    st.dataframe(group_errors.rename(
+    st.html('<div class="regional-table">' + group_errors.rename(
         index={"no": "Non-smokers", "yes": "Smokers"},
         columns={"records": "Records checked", "mae": "Average prediction error (charge units)"},
-    ).rename_axis("Smoking group").round(2))
+    ).rename_axis("Smoking group").reset_index().to_html(index=False, float_format="{:,.2f}".format) + '</div>')
     st.write("These results describe this sample; they do not establish reliable current-cost forecasts or suitable prices for individuals.")
 
 
